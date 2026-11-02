@@ -1,8 +1,10 @@
 ---
 import { site } from '../data/site';
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const on = (h: string) => (path === h || path.startsWith(h + '/') ? 'page' : undefined);
 ---
 <div class="mbar" role="navigation" aria-label="Quick actions">
-  <button type="button" data-open-finder>Services</button>
+  <a href="/services" aria-current={on('/services')}>Services</a>
   <a href={`tel:${site.phoneTel}`}>Call</a>
-  <a class="mbar__quote" href="/quote" data-quote-link>Quote<span class="badge" data-badge hidden></span></a>
+  <a class="mbar__quote" href="/quote" aria-current={on('/quote')}>Quote</a>
 </div>

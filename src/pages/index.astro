@@ -3,11 +3,10 @@ import Base from '../layouts/Base.astro';
 import Img from '../components/Img.astro';
 import Arrow from '../components/Arrow.astro';
 import Icon from '../components/Icon.astro';
-import Marquee from '../components/Marquee.astro';
 import { site, groups, reviews, photos, allServices } from '../data/site';
 
 const faqs = [
-  { q: 'How do I get a price?', a: 'We quote per vehicle and per job. Send your car model and what you want done, with photos if you can, and we will reply with a price.' },
+  { q: 'How do I get a price?', a: 'We quote per vehicle and per job. Send your car model and what you want done, with photos if you can, and we will reply with a rough estimate. For a more accurate quotation, we check the vehicle in person.' },
   { q: 'Can I just drive in?', a: `We are open ${site.hours.days}, ${site.hours.label}. For repainting and coatings, request a quote first so we can plan the work properly.` },
   { q: 'What can you work on?', a: 'Any vehicle. Cars, SUVs, pickups, motorcycles and more. If it has wheels and needs care, ask us.' },
   { q: 'Is there somewhere to wait?', a: 'Yes. There is a comfortable waiting area at the shop, so you can sit while your vehicle is washed.' },
@@ -32,7 +31,7 @@ const faqLd = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity
         <p class="lead" data-load style="--d:420ms" set:html={site.tagline.replace('top-notch', '<span class="nb">top-notch</span>')}></p>
         <div class="hero__actions" data-load style="--d:520ms">
           <a class="btn" href="/quote">Request a quote <Arrow /></a>
-          <button type="button" class="btn btn--ghost" data-open-finder>Browse services</button>
+          <a class="btn btn--ghost" href="/services">Browse services</a>
           <a class="arrow-link" href="#reviews">Read what customers say <Arrow /></a>
         </div>
         <p class="status" data-load style="--d:620ms" data-status data-opens={site.hours.opens} data-closes={site.hours.closes} data-state="open">
@@ -41,15 +40,11 @@ const faqLd = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity
         </p>
       </div>
       <div class="hero__photo" data-open>
-        <picture>
-          <source media="(min-width: 901px)" srcset="/img/adv-motorcycle-hex-bay.webp" width="1536" height="2048" />
-          <img src="/img/fortuner-trd-front.webp" srcset="/img/fortuner-trd-front-sm.webp 720w, /img/fortuner-trd-front.webp 1600w" sizes="100vw" width="1600" height="1200" alt="Front of a white Toyota Fortuner TRD with the hex ceiling lights reflected on the hood" fetchpriority="high" decoding="sync" />
-        </picture>
+        <Img name="shop-evening" eager sizes="(max-width: 900px) 100vw, 34vw" />
       </div>
     </div>
   </section>
 
-  <Marquee words={['Carwash','Detailing','Ceramic coating','Graphene coating','Repainting','Headlight restoration','Back to Zero','Engine wash','Seat covers','PMS']} dir={-1} />
 
   <!-- Reviews: real screenshots, unedited -->
   <section class="band band--stone on-stone" id="reviews" aria-labelledby="reviews-h">
@@ -110,19 +105,19 @@ const faqLd = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity
             <ul>
               {g.items.map((it) => (
                 <li>
-                  <button type="button" class="svcbtn" data-svc={it.id} data-text={it.text} aria-pressed="false"><Icon id={it.id} /><span>{it.name}</span><i class="plus" aria-hidden="true"></i></button>
+                  <a class="svcbtn" href={`/services#${it.id}`} data-text={it.text}><Icon id={it.id} /><span>{it.name}</span></a>
                   <p class="svc__sum small">{it.text}</p>
                 </li>
               ))}
             </ul>
-            <a class="arrow-link" href={`/services/${g.slug}`}>{g.short} <Arrow /></a>
+            <a class="arrow-link" href={`/services#${g.slug}`}>{g.short} <Arrow /></a>
           </div>
         ))}
-        <p class="svc__tip" data-tip data-fallback="Point at a service to see what it is. Tap + to add it to your quote." data-empty="true">Point at a service to see what it is. Tap + to add it to your quote.</p>
+        <p class="svc__tip" data-tip data-fallback="Point at a service to see what it is." data-empty="true">Point at a service to see what it is.</p>
       </div>
       <div class="svc__cta" data-reveal>
-        <button type="button" class="btn" data-open-finder>Browse all {allServices.length} services</button>
-        <a class="btn btn--ghost" href="/quote" data-quote-link>Request a quote <Arrow /></a>
+        <a class="btn" href="/services">See all {allServices.length} services <Arrow /></a>
+        <a class="btn btn--ghost" href="/quote">Request a quote <Arrow /></a>
       </div>
     </div>
   </section>
@@ -158,7 +153,6 @@ const faqLd = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity
     </div>
   </section>
 
-  <Marquee words={['Cauayan City','Open daily 6 AM to 7 PM','Any vehicle, same care','Request a quote']} dir={1} tone="ghost" />
 
   <!-- The place -->
   <section class="band band--stone on-stone" aria-labelledby="place-h">

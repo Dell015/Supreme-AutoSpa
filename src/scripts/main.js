@@ -93,55 +93,6 @@ function initMotion() {
   });
 }
 
-// ---- Service selection: one list shared by the finder, the services page, the quote form and the nav badges.
-const KEY = 'sas-selected';
-const getSel = () => { try { return JSON.parse(sessionStorage.getItem(KEY) || '[]'); } catch { return []; } };
-const setSel = (a) => { try { sessionStorage.setItem(KEY, JSON.stringify(a)); } catch {} syncSel(); };
-function syncSel() {
-  const sel = getSel();
-  document.querySelectorAll('[data-svc]').forEach((b) => b.setAttribute('aria-pressed', String(sel.includes(b.dataset.svc))));
-  const href = sel.length ? `/quote?service=${sel.join(',')}` : '/quote';
-  document.querySelectorAll('[data-quote-link]').forEach((a) => { a.setAttribute('href', href); });
-  document.querySelectorAll('[data-badge]').forEach((b) => { b.hidden = !sel.length; b.textContent = sel.length; });
-  document.querySelectorAll('[data-count-label]').forEach((l) => { l.textContent = sel.length ? `${sel.length} selected` : 'Tap services to add them'; });
-  document.querySelectorAll('[data-quote-bar]').forEach((b) => { b.dataset.on = sel.length ? 'true' : 'false'; });
-  document.querySelectorAll('.quote form input[name="service"]').forEach((c) => { c.checked = sel.includes(c.value); });
-}
-function toggleSvc(id) { const s = getSel(); setSel(s.includes(id) ? s.filter((x) => x !== id) : [...s, id]); }
-
-function initFinder() {
-  const dlg = document.querySelector('dialog[data-finder]');
-  const open = () => { const d = document.querySelector('dialog[data-finder]'); if (!d || d.open) return; d.showModal(); d.querySelector('[data-q]')?.focus({ preventScroll: true }); };
-  document.querySelectorAll('[data-open-finder]').forEach((el) => {
-    if (el.dataset.bound) return; el.dataset.bound = '1';
-    el.addEventListener('click', (e) => {
-      if (el.tagName === 'A' && location.pathname.replace(/\/$/, '') === '/services') return; // already on the full list
-      e.preventDefault(); open();
-    });
-  });
-  if (dlg) {
-    dlg.querySelector('[data-finder-close]').addEventListener('click', () => dlg.close());
-    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
-    dlg.querySelector('[data-quote-link]').addEventListener('click', () => dlg.close());
-  }
-  document.querySelectorAll('[data-svc]').forEach((b) => b.addEventListener('click', () => toggleSvc(b.dataset.svc)));
-  document.querySelectorAll('[data-filter-root]').forEach((root) => {
-    const q = root.querySelector('[data-q]'); const tabs = [...root.querySelectorAll('[data-tab]')];
-    const items = [...root.querySelectorAll('[data-item]')]; const none = root.querySelector('.finder__none, [data-none]');
-    let tab = 'all';
-    const apply = () => {
-      const t = (q?.value || '').trim().toLowerCase(); let n = 0;
-      items.forEach((li) => { const ok = (tab === 'all' || li.dataset.group === tab) && (!t || li.dataset.search.includes(t)); li.hidden = !ok; if (ok) n++; });
-      if (none) none.hidden = n > 0;
-    };
-    q?.addEventListener('input', apply);
-    tabs.forEach((b) => b.addEventListener('click', () => { tab = b.dataset.tab; tabs.forEach((x) => x.setAttribute('aria-pressed', String(x === b))); apply(); }));
-  });
-  const fromUrl = new URLSearchParams(location.search).get('service');
-  if (fromUrl && location.pathname.startsWith('/quote')) setSel([...new Set([...getSel(), ...fromUrl.split(',')])]);
-  syncSel();
-}
-
 function initStatus() {
   document.querySelectorAll('[data-status]').forEach((el) => {
     const opens = Number(el.dataset.opens);
@@ -232,25 +183,51 @@ function initQuote() {
   if (!form) return;
   const out = document.querySelector('[data-result]');
   const pre = out.querySelector('pre');
-  form.querySelectorAll('input[name="service"]').forEach((c) => c.addEventListener('change', () => setSel([...form.querySelectorAll('input[name="service"]:checked')].map((x) => x.value))));
+  const q = new URLSearchParams(location.search).get('service');
+  if (q) q.split(',').forEach((id) => { const c = form.querySelector(`input[value="${CSS.escape(id)}"]`); if (c) c.checked = true; });
+
+  // Extra questions appear only for the services they belong to.
+  const when = () => {
+    const picked = [...form.querySelectorAll('input[name="service"]:checked')].map((c) => c.value);
+    form.querySelectorAll('[data-when]').forEach((f) => { f.hidden = !f.dataset.when.split(',').some((id) => picked.includes(id)); });
+    form.querySelector('[data-services-err]').hidden = true;
+  };
+  form.querySelectorAll('input[name="service"]').forEach((c) => c.addEventListener('change', when));
+  when();
+
+  const label = (id) => form.querySelector(`input[value="${CSS.escape(id)}"]`)?.nextElementSibling?.textContent || id;
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const d = new FormData(form);
     const services = d.getAll('service');
-    const lines = ['Hi Supreme AutoSpa, I would like a quote.'];
-    const add = (k, v) => { if (v && String(v).trim()) lines.push(`${k}: ${String(v).trim()}`); };
-    add('Name', d.get('name'));
-    add('Phone', d.get('phone'));
-    add('Vehicle', [d.get('vehicle'), d.get('vtype')].filter(Boolean).join(', '));
-    add('Services', services.join(', '));
-    add('Preferred day and time', d.get('when'));
-    add('Notes', d.get('notes'));
-    lines.push('I can send photos of the vehicle if needed.');
+    if (!services.length) {
+      const err = form.querySelector('[data-services-err]'); err.hidden = false;
+      form.querySelector('[data-services]').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    const v = (k) => String(d.get(k) || '').trim();
+    const lines = ['Hi Supreme AutoSpa, I would like a quote.', ''];
+    const add = (k, val) => { if (val) lines.push(`${k}: ${val}`); };
+    lines.push('CONTACT');
+    add('Name', v('name')); add('Mobile', v('phone')); add('Email', v('email')); add('Best way to reach me', v('contact'));
+    lines.push('', 'VEHICLE');
+    add('Type', v('vtype')); add('Vehicle', [v('year'), v('make'), v('model')].filter(Boolean).join(' ')); add('Color', v('color'));
+    add('Paint condition', v('paint')); add('Interior condition', v('interior'));
+    lines.push('', 'SERVICES WANTED');
+    services.forEach((id) => lines.push('- ' + label(id)));
+    if (services.includes('repaint')) { lines.push('', 'REPAINTING'); add('Scope', v('repaint_scope')); add('Color', v('repaint_color')); add('Areas', v('repaint_areas')); }
+    if (services.includes('ceramic') || services.includes('graphene')) { lines.push('', 'COATING'); add('Existing coating', v('has_coating')); }
+    if (services.includes('pms')) { lines.push('', 'MAINTENANCE'); add('Odometer', v('odometer') && v('odometer') + ' km'); add('Last PMS', v('last_pms')); add('Concerns', v('concerns')); }
+    if (v('date') || v('slot') || v('urgency')) { lines.push('', 'SCHEDULE'); add('Preferred date', v('date')); add('Preferred time', v('slot')); add('Needed', v('urgency')); }
+    if (v('notes')) { lines.push('', 'NOTES', v('notes')); }
+    lines.push('', d.get('photos') ? 'I will send photos of the vehicle.' : 'I can send photos if needed.');
+    lines.push('I understand the quote is a rough estimate, and that a more accurate quotation needs a physical check of the vehicle.');
     const msg = lines.join('\n');
     pre.textContent = msg;
     const enc = encodeURIComponent(msg);
-    out.querySelector('[data-mail]').href = `mailto:${form.dataset.email}?subject=${encodeURIComponent('Quote request')}&body=${enc}`;
+    out.querySelector('[data-mail]').href = `mailto:${form.dataset.email}?subject=${encodeURIComponent('Quote request: ' + [v('make'), v('model')].filter(Boolean).join(' '))}&body=${enc}`;
     out.querySelector('[data-sms]').href = `sms:${form.dataset.sms}?&body=${enc}`;
     out.hidden = false;
     out.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
@@ -278,7 +255,6 @@ function init() {
   initReveals();
   initStatus();
   initMotion();
-  initFinder();
   initReel();
   initServiceTips();
   initGallery();

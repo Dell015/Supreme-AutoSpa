@@ -2,47 +2,62 @@
 import Base from '../../layouts/Base.astro';
 import Arrow from '../../components/Arrow.astro';
 import Icon from '../../components/Icon.astro';
-import { groups, allServices } from '../../data/site';
+import Img from '../../components/Img.astro';
+import { groups, allServices, photos } from '../../data/site';
+const side: Record<string, string[]> = {
+  'car-wash': ['hilux-undercarriage-ramp', 'sample-engine-bay'],
+  detailing: ['fortuner-trd-front', 'sample-interior'],
+  repainting: ['bmw-4-series', 'sample-polishing'],
+};
 ---
-<Base title="Services" description={`Car wash, detailing, coatings and repainting in Cauayan City. ${allServices.length} services for any vehicle. Pick what you need and request a quote.`}>
+<Base title="Services" description={`Every service at Supreme AutoSpa in Cauayan City: car wash, detailing, coatings, PMS and repainting. What each one does and what you get. Request a quote.`}>
   <section class="wrap pagehead" data-lit style="position:relative">
     <div class="hexbg" aria-hidden="true"><i data-parallax="0.08"></i></div><div class="hexlit" aria-hidden="true"></div>
     <p class="crumbs"><a href="/">Home</a> / Services</p>
-    <h1 class="display"><span data-line>All</span> <span data-line>{allServices.length} services</span></h1>
-    <p class="lead">Tap the ones you need. We build your quote request from them.</p>
+    <h1 class="display"><span data-line>What we do</span></h1>
+    <p class="lead">All {allServices.length} services, what each one does and what you get from it. Any vehicle, any make.</p>
+    <nav class="jump" aria-label="Jump to a group">
+      {groups.map((g) => <a href={`#${g.slug}`}>{g.title}</a>)}
+    </nav>
   </section>
 
-  <section class="band band--tight-top" data-filter-root style="padding-top:0">
-    <div class="wrap">
-      <div class="svcbar">
-        <label class="finder__search">
-          <span class="vh">Search services</span>
-          <input type="search" placeholder="Search, e.g. headlight, coating" data-q autocomplete="off" />
-        </label>
-        <div class="tabs" role="group" aria-label="Service type">
-          <button type="button" data-tab="all" aria-pressed="true">All</button>
-          {groups.map((g) => <button type="button" data-tab={g.slug} aria-pressed="false">{g.title}</button>)}
+  {groups.map((g, gi) => (
+    <section class={`band ${gi % 2 === 0 ? 'band--stone on-stone' : ''}`} id={g.slug} aria-labelledby={`${g.slug}-h`}>
+      <div class="wrap sv">
+        <div class="sv__intro">
+          <h2 class="title" id={`${g.slug}-h`} data-reveal>{g.title}</h2>
+          <p class="lead" data-reveal style="--i:1">{g.lead}</p>
+          <div class="sv__photos">
+            {side[g.slug].map((k) => (
+              <div class="ph" data-reveal>
+                <Img name={k} sizes="(max-width: 900px) 100vw, 36vw" fit={photos[k].sample ? '50% 40%' : undefined} />
+                {photos[k].sample && <span class="sample">Sample photo</span>}
+              </div>
+            ))}
+          </div>
+        </div>
+        <div class="sv__list">
+          {g.items.map((i) => (
+            <article class="sv__item" id={i.id} data-reveal>
+              <Icon id={i.id} class="sv__ico" />
+              <h3>{i.name}</h3>
+              <dl>
+                <div><dt>What it does</dt><dd>{i.text}</dd></div>
+                <div><dt>What you get</dt><dd>{i.benefit}</dd></div>
+              </dl>
+              <a class="arrow-link" href={`/quote?service=${i.id}`}>Ask for a quote <Arrow /></a>
+            </article>
+          ))}
         </div>
       </div>
-      <ul class="cards">
-        {groups.flatMap((g) => g.items.map((i, n) => (
-          <li data-item data-group={g.slug} data-search={`${i.name} ${i.text}`.toLowerCase()} data-reveal style={`--i:${n % 4}`}>
-            <button type="button" class="card" data-svc={i.id} aria-pressed="false">
-              <Icon id={i.id} class="card__ico" />
-              <b>{i.name}</b>
-              <span>{i.text}</span>
-              <em class="card__add"><i class="plus" aria-hidden="true"></i><span class="card__off">Add to quote</span><span class="card__on">Added</span></em>
-            </button>
-          </li>
-        )))}
-      </ul>
-      <p class="finder__none" data-none hidden>Nothing matches that. Try another word, or just ask us.</p>
-      <p class="svcbar__more">Prefer a closer look? <a href="/services/car-wash">Wash</a>, <a href="/services/detailing">Detailing</a>, <a href="/services/repainting">Coatings and repainting</a>.</p>
+    </section>
+  ))}
+
+  <section class="band">
+    <div class="wrap" style="display:grid;gap:24px;justify-items:start">
+      <h2 class="title">Not sure which one you need?</h2>
+      <p class="lead">Tell us about the vehicle and what bothers you. We will point you to the right service.</p>
+      <a class="btn" href="/quote">Request a quote <Arrow /></a>
     </div>
   </section>
-
-  <div class="qbar" data-quote-bar data-on="false">
-    <span data-count-label>Tap services to add them</span>
-    <a class="btn" href="/quote" data-quote-link>Request a quote <Arrow /></a>
-  </div>
 </Base>

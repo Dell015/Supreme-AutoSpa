@@ -1,9 +1,0 @@
----
-const { words, dir = -1, tone = 'copper' } = Astro.props;
-const set = [...words];
----
-<div class={`marq marq--${tone}`} data-marquee data-dir={dir} aria-hidden="true">
-  <div class="marq__track">
-    {[0, 1, 2, 3].flatMap(() => set.map((w) => (<span class="marq__w">{w}<i></i></span>)))}
-  </div>
-</div>

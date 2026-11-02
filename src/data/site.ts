@@ -32,7 +32,7 @@ export const credit = {
   url: '',
 };
 
-export type Service = { id: string; name: string; text: string };
+export type Service = { id: string; name: string; text: string; benefit: string };
 export type ServiceGroup = {
   slug: string;
   title: string;
@@ -41,6 +41,7 @@ export type ServiceGroup = {
   items: Service[];
 };
 
+// DRAFT COPY: the 'text' and 'benefit' lines are written from the service names. Confirm them with the owner.
 export const groups: ServiceGroup[] = [
   {
     slug: 'car-wash',
@@ -48,9 +49,9 @@ export const groups: ServiceGroup[] = [
     short: 'Car wash',
     lead: 'Any vehicle, any make. Bring it in dusty, muddy or just overdue.',
     items: [
-      { id: 'carwash', name: 'Carwash', text: 'A full exterior wash for cars, SUVs, pickups and motorcycles.' },
-      { id: 'engine-wash', name: 'Engine wash', text: 'Cleans grease and dust from the engine bay.' },
-      { id: 'undercarriage', name: 'Undercarriage rinsing', text: 'Rinses mud and road grime from underneath the vehicle.' },
+      { id: 'carwash', name: 'Carwash', text: 'A full exterior wash that removes dust, mud and road film from the body, wheels and glass. For cars, SUVs, pickups and motorcycles.', benefit: 'Your vehicle looks clean again, and regular washing keeps dirt and grime from wearing down the paint.' },
+      { id: 'engine-wash', name: 'Engine wash', text: 'Cleans grease, dust and caked-on dirt from the engine bay.', benefit: 'A clean engine bay is easier to inspect, makes leaks and wear easier to spot, and keeps the vehicle looking cared for.' },
+      { id: 'undercarriage', name: 'Undercarriage rinsing', text: 'Rinses mud, dirt and road grime from underneath the vehicle and the wheel wells.', benefit: 'Clears the mud that traps moisture against metal parts, which helps protect the underside from rust over time.' },
     ],
   },
   {
@@ -59,14 +60,14 @@ export const groups: ServiceGroup[] = [
     short: 'Detailing',
     lead: 'Interior and exterior detailing, plus the small fixes that make an older car look cared for again.',
     items: [
-      { id: 'interior', name: 'Interior detailing', text: 'Deep cleaning of seats, carpets, panels and glass inside the cabin.' },
-      { id: 'exterior', name: 'Exterior detailing', text: 'Paint-focused cleaning and finishing on the outside.' },
-      { id: 'headlight', name: 'Headlight restoration', text: 'Clears cloudy, yellowed headlight lenses.' },
-      { id: 'asphalt', name: 'Asphalt removal', text: 'Lifts road tar and asphalt spots from the paint.' },
-      { id: 'acid-rain', name: 'Acid rain removal', text: 'Treats acid rain water spots on paint and glass.' },
-      { id: 'stickers', name: 'Sticker and emblem removal', text: 'Takes off old stickers, decals and emblems cleanly.' },
-      { id: 'back-to-zero', name: 'Back to Zero', text: 'Restores the car to its brand-new state.' },
-      { id: 'seat-covers', name: 'Seat cover installation', text: 'Fitted seat covers for a clean, finished interior.' },
+      { id: 'interior', name: 'Interior detailing', text: 'Deep cleaning of the seats, carpets, panels and glass inside the cabin.', benefit: 'A fresher, cleaner cabin to sit in, with less dust and dirt ground into the upholstery and carpets.' },
+      { id: 'exterior', name: 'Exterior detailing', text: 'Paint-focused cleaning and finishing on the outside, going further than a standard wash.', benefit: 'Brings back depth and shine to the paint, so the whole vehicle looks sharper.' },
+      { id: 'headlight', name: 'Headlight restoration', text: 'Clears cloudy, yellowed headlight lenses.', benefit: 'Clearer lenses let more light through for better night visibility, and the front of the vehicle looks newer.' },
+      { id: 'asphalt', name: 'Asphalt removal', text: 'Lifts road tar and asphalt spots from the paint.', benefit: 'Removes stubborn black spots so they do not stay stuck to the paint and spoil the finish.' },
+      { id: 'acid-rain', name: 'Acid rain removal', text: 'Treats the water spots left by acid rain on paint and glass.', benefit: 'Clears the dull marks left by dried rain so paint and glass look clean and clear again.' },
+      { id: 'stickers', name: 'Sticker and emblem removal', text: 'Takes off old stickers, decals and emblems cleanly.', benefit: 'Lets you remove old branding or leftover adhesive with care for the paint underneath.' },
+      { id: 'back-to-zero', name: 'Back to Zero', text: 'Restores the car to its brand-new state.', benefit: 'A full reset for a vehicle that has seen years of use. A good choice before selling, or when you simply want it to feel new again.' },
+      { id: 'seat-covers', name: 'Seat cover installation', text: 'Fitted seat covers, installed for a clean, finished interior.', benefit: 'Protects the original seats from wear and stains, and gives the cabin a fresh look.' },
     ],
   },
   {
@@ -75,10 +76,10 @@ export const groups: ServiceGroup[] = [
     short: 'Coatings and repainting',
     lead: 'Protective coatings, scheduled maintenance and full body repainting. These jobs are priced per vehicle, so ask for a quote first.',
     items: [
-      { id: 'ceramic', name: 'Ceramic coating', text: 'A protective coating that adds gloss and makes washing easier.' },
-      { id: 'graphene', name: 'Graphene coating', text: 'A graphene-based protective coating for gloss and easier cleaning.' },
-      { id: 'pms', name: 'PMS', text: 'Preventive maintenance service, to keep your vehicle running right.' },
-      { id: 'repaint', name: 'Car repainting', text: 'Full body or panel repaint. Send photos with your quote request.' },
+      { id: 'ceramic', name: 'Ceramic coating', text: 'A protective ceramic coating applied to the paint.', benefit: 'Adds gloss, helps shield the paint from dirt and water spots, and makes washing easier.' },
+      { id: 'graphene', name: 'Graphene coating', text: 'A graphene-based protective coating applied to the paint.', benefit: 'Adds a deep gloss and a protective layer that repels dirt and water, so the vehicle stays cleaner for longer.' },
+      { id: 'pms', name: 'PMS', text: 'Preventive maintenance service, to keep your vehicle running right.', benefit: 'Catches small issues early and helps you avoid bigger repairs and breakdowns later.' },
+      { id: 'repaint', name: 'Car repainting', text: 'Full body or panel repainting. Send photos with your quote request.', benefit: 'Restores faded, scratched or damaged paint and gives the vehicle a fresh, even finish.' },
     ],
   },
 ];
@@ -86,11 +87,15 @@ export const groups: ServiceGroup[] = [
 export const allServices: Service[] = groups.flatMap((g) => g.items);
 
 export const vehicleTypes = [
-  'Sedan or hatchback',
-  'SUV or MPV',
-  'Pickup or van',
-  'Motorcycle',
-  'Tractor or other',
+  'Sedan',
+  'Hatchback',
+  'SUV',
+  'MPV or van',
+  'Pickup',
+  'Motorcycle or scooter',
+  'Truck',
+  'Tractor or heavy equipment',
+  'Other',
 ];
 
 export type Photo = {
@@ -100,6 +105,8 @@ export type Photo = {
   alt: string;
   caption: string;
   tags: string[];
+  // true = stock/sample photo, not taken at the shop. Replace with a real one and remove the flag.
+  sample?: boolean;
 };
 
 // Real photos supplied by the shop. Captions only say what is visible.
@@ -122,6 +129,13 @@ export const photos: Record<string, Photo> = {
 
 photos['shop-exterior'] = { file: 'shop-exterior', w: 1800, h: 1350, alt: 'The Supreme AutoSpa building: copper roofs over open bays, dark cladding, bamboo and volcanic stone', caption: 'The shop', tags: ['shop'] };
 
+// SAMPLE PHOTOS: placeholders until the shop has its own. They are labelled on the page.
+photos['sample-interior'] = { file: 'sample-interior', w: 1400, h: 1750, alt: 'Sample photo: interior of a blue sedan with black leather seats after detailing', caption: 'Interior detailing', tags: [], sample: true };
+photos['sample-engine-bay'] = { file: 'sample-engine-bay', w: 627, h: 1114, alt: 'Sample photo: a clean engine bay under an open hood', caption: 'Engine wash', tags: [], sample: true };
+photos['sample-polishing'] = { file: 'sample-polishing', w: 687, h: 1031, alt: 'Sample photo: a polishing machine buffing the paint of a white car', caption: 'Polishing', tags: [], sample: true };
+
+photos['wheel-loader'] = { file: 'wheel-loader', w: 488, h: 732, alt: 'Yellow SDLG wheel loader with two men on it, being washed outdoors under a blue sky', caption: 'SDLG wheel loader', tags: ['other'] };
+
 export const galleryOrder = [
   'sign-vintage-4x4',
   'bmw-4-series',
@@ -137,6 +151,7 @@ export const galleryOrder = [
   'hilux-ramp-wide',
   'shop-entrance-side',
   'fortuner-stone-ramp',
+  'wheel-loader',
 ];
 
 export const reviews = [

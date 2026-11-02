@@ -2,35 +2,126 @@
 import Base from '../layouts/Base.astro';
 import Arrow from '../components/Arrow.astro';
 import { site, groups, vehicleTypes } from '../data/site';
+const paint = ['Good, just needs a clean', 'Dull or faded', 'Scratches or swirl marks', 'Chips, dents or rust spots', 'Peeling or damaged'];
+const interior = ['Lightly used', 'Dirty or dusty', 'Stains or bad odor', 'Heavily soiled'];
+const slots = ['Morning (6 AM to 11 AM)', 'Midday (11 AM to 2 PM)', 'Afternoon (2 PM to 7 PM)', 'Any time'];
 ---
-<Base title="Request a quote" description="Request a quote from Supreme AutoSpa in Cauayan City. Tell us your vehicle and the service you need.">
+<Base title="Request a quote" description="Request a quote from Supreme AutoSpa in Cauayan City. Tell us your vehicle, its condition and the services you need, and we reply with an estimate.">
   <section class="wrap pagehead">
     <p class="crumbs"><a href="/">Home</a> / Request a quote</p>
     <h1 class="display"><span data-line>Request</span> <span data-line>a quote</span></h1>
-    <p class="lead">Tell us about your vehicle. We reply with a quote, no obligation.</p>
+    <p class="lead">The more you tell us, the closer our estimate. It takes about two minutes.</p>
+    <div class="notice" role="note" style="margin-top:28px">
+      <b>Quotes are rough estimates.</b>
+      <p>What we send back is an estimate based on what you tell us. For a more accurate quotation, we need to check your vehicle in person.</p>
+    </div>
   </section>
   <section class="band band--tight-top">
     <div class="wrap quote">
-      <form data-quote data-email={site.email} data-sms={site.phoneSms} data-endpoint="" novalidate>
-        <div class="field"><label for="name">Your name</label><input id="name" name="name" type="text" autocomplete="name" /></div>
-        <div class="field"><label for="phone">Mobile number</label><input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" /></div>
-        <div class="field"><label for="vehicle">Vehicle (make, model, year)</label><input id="vehicle" name="vehicle" type="text" placeholder="e.g. Toyota Innova 2017" /></div>
-        <div class="field"><label for="vtype">Vehicle type</label>
-          <select id="vtype" name="vtype"><option value="">Choose one</option>{vehicleTypes.map((v) => (<option>{v}</option>))}</select>
-        </div>
-        {groups.map((g) => (
-          <fieldset class="field">
-            <legend>{g.short}</legend>
-            <div class="chips">{g.items.map((i) => (<label><input type="checkbox" name="service" value={i.id} /><span>{i.name}</span></label>))}</div>
-          </fieldset>
-        ))}
-        <div class="field"><label for="when">Preferred day and time</label><input id="when" name="when" type="text" placeholder="e.g. Saturday morning" /></div>
-        <div class="field"><label for="notes">Anything else?</label><textarea id="notes" name="notes"></textarea></div>
-        <button class="btn" type="submit">Build my message <Arrow /></button>
+      <form data-quote data-email={site.email} data-sms={site.phoneSms} data-endpoint="">
+
+        <fieldset class="group">
+          <legend>About you</legend>
+          <div class="row2">
+            <div class="field"><label for="name">Your name <em>required</em></label><input id="name" name="name" type="text" autocomplete="name" required /></div>
+            <div class="field"><label for="phone">Mobile number <em>required</em></label><input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required /></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="email">Email <small>optional</small></label><input id="email" name="email" type="email" autocomplete="email" /></div>
+            <div class="field"><label for="contact">Best way to reach you</label>
+              <select id="contact" name="contact"><option>Messenger</option><option>Text message</option><option>Phone call</option><option>Email</option></select>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="group">
+          <legend>Your vehicle</legend>
+          <div class="row2">
+            <div class="field"><label for="vtype">Vehicle type <em>required</em></label>
+              <select id="vtype" name="vtype" required><option value="">Choose one</option>{vehicleTypes.map((v) => (<option>{v}</option>))}</select>
+            </div>
+            <div class="field"><label for="year">Year</label><input id="year" name="year" type="text" inputmode="numeric" maxlength="4" placeholder="e.g. 2017" /></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="make">Make <em>required</em></label><input id="make" name="make" type="text" placeholder="e.g. Toyota" required /></div>
+            <div class="field"><label for="model">Model and variant <em>required</em></label><input id="model" name="model" type="text" placeholder="e.g. Innova 2.8 E" required /></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="color">Color</label><input id="color" name="color" type="text" placeholder="e.g. Silver" /></div>
+            <div class="field"><label for="paint">Paint condition</label>
+              <select id="paint" name="paint"><option value="">Not sure</option>{paint.map((v) => (<option>{v}</option>))}</select>
+            </div>
+          </div>
+          <div class="field"><label for="interior">Interior condition</label>
+            <select id="interior" name="interior"><option value="">Not sure</option>{interior.map((v) => (<option>{v}</option>))}</select>
+          </div>
+        </fieldset>
+
+        <fieldset class="group" data-services>
+          <legend>What do you need? <em>pick at least one</em></legend>
+          {groups.map((g) => (
+            <div class="field">
+              <p class="sub">{g.short}</p>
+              <div class="chips">{g.items.map((i) => (<label><input type="checkbox" name="service" value={i.id} /><span>{i.name}</span></label>))}</div>
+            </div>
+          ))}
+          <p class="err" data-services-err role="alert" hidden>Please pick at least one service.</p>
+        </fieldset>
+
+        <fieldset class="group" data-when="repaint" hidden>
+          <legend>Repainting details</legend>
+          <div class="row2">
+            <div class="field"><label for="rscope">How much needs repainting?</label>
+              <select id="rscope" name="repaint_scope"><option value="">Not sure</option><option>Full body</option><option>One or two panels</option><option>Several panels</option><option>Bumper only</option></select>
+            </div>
+            <div class="field"><label for="rcolor">Color you want</label>
+              <select id="rcolor" name="repaint_color"><option value="">Not sure</option><option>Same color as now</option><option>A different color</option></select>
+            </div>
+          </div>
+          <div class="field"><label for="rareas">Which areas are damaged or need work?</label><input id="rareas" name="repaint_areas" type="text" placeholder="e.g. rear bumper, driver door, roof" /></div>
+        </fieldset>
+
+        <fieldset class="group" data-when="ceramic,graphene" hidden>
+          <legend>Coating details</legend>
+          <div class="field"><label for="hascoat">Does the vehicle already have a coating?</label>
+            <select id="hascoat" name="has_coating"><option value="">Not sure</option><option>No</option><option>Yes, ceramic</option><option>Yes, graphene</option><option>Yes, not sure which</option></select>
+          </div>
+        </fieldset>
+
+        <fieldset class="group" data-when="pms" hidden>
+          <legend>Maintenance details</legend>
+          <div class="row2">
+            <div class="field"><label for="odo">Odometer (km)</label><input id="odo" name="odometer" type="text" inputmode="numeric" placeholder="e.g. 85000" /></div>
+            <div class="field"><label for="lastpms">Last PMS (date or km)</label><input id="lastpms" name="last_pms" type="text" placeholder="e.g. 6 months ago" /></div>
+          </div>
+          <div class="field"><label for="concerns">Anything wrong or worrying you?</label><input id="concerns" name="concerns" type="text" placeholder="e.g. noise when braking" /></div>
+        </fieldset>
+
+        <fieldset class="group">
+          <legend>When</legend>
+          <div class="row2">
+            <div class="field"><label for="date">Preferred date</label><input id="date" name="date" type="date" /></div>
+            <div class="field"><label for="slot">Preferred time</label>
+              <select id="slot" name="slot"><option value="">No preference</option>{slots.map((v) => (<option>{v}</option>))}</select>
+            </div>
+          </div>
+          <div class="field"><label for="urgency">How soon do you need it done?</label>
+            <select id="urgency" name="urgency"><option value="">Flexible</option><option>As soon as possible</option><option>This week</option><option>This month</option></select>
+          </div>
+        </fieldset>
+
+        <fieldset class="group">
+          <legend>Anything else?</legend>
+          <div class="field"><label for="notes">Notes <small>optional</small></label><textarea id="notes" name="notes" placeholder="Tell us what bothers you, or anything we should know."></textarea></div>
+          <label class="check"><input type="checkbox" name="photos" value="yes" /><span>I will send photos of the vehicle after this, on Messenger or by text.</span></label>
+          <label class="check"><input type="checkbox" name="ack" value="yes" required /><span>I understand the quote is a rough estimate, and that a more accurate quotation needs a physical check of my vehicle.</span></label>
+        </fieldset>
+
+        <button class="btn" type="submit">Build my quote request <Arrow /></button>
       </form>
       <aside>
         <div class="result" data-result hidden>
-          <h2 class="title" tabindex="-1" style="font-size:1.75rem">Your message is ready</h2>
+          <h2 class="title" tabindex="-1" style="font-size:1.75rem">Your request is ready</h2>
           <pre></pre>
           <div class="result__actions">
             <a class="btn" data-messenger href={site.messenger} target="_blank" rel="noopener">Send on Messenger</a>
@@ -39,6 +130,7 @@ import { site, groups, vehicleTypes } from '../data/site';
             <button class="btn btn--ghost" type="button" data-copy data-label="Copy message">Copy message</button>
           </div>
           <p>On Messenger, paste the copied message into the chat.</p>
+          <p><b>Please note:</b> our reply is a rough estimate. A more accurate quotation can be given after a physical check of your vehicle.</p>
         </div>
         <dl>
           <div><dt>Call</dt><dd><a href={`tel:${site.phoneTel}`}>{site.phone}</a></dd></div>
