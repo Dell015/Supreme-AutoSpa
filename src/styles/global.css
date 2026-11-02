@@ -634,3 +634,9 @@ html, body { overflow-x: clip; }
 .totop.is-on { opacity: 1; translate: 0 0; pointer-events: auto; }
 .totop:active { scale: 0.94; }
 @media (hover: hover) and (pointer: fine) { .totop:hover { background: var(--ink); } }
+
+/* QA fixes */
+.sv__item h3 { overflow-wrap: anywhere; hyphens: auto; }
+@media (max-width: 820px) { .sv__item h3 { font-size: clamp(1.5rem, 6.4vw, 2rem); } .footer__legal a[href='#top'] { display: none; } .footer__places a { font-size: clamp(1rem, 4.6vw, 1.5rem); } .nav__sheet .nav__call + .nav__call { margin-top: 0; } }
+.band:not(.band--dark) .place__facts dd, .place__facts dd { color: var(--stone-muted); }
+.footer .place__facts dd { color: var(--muted); }

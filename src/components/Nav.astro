@@ -22,6 +22,7 @@ const cur = (h: string) => (path === h || path.startsWith(h + '/') ? 'page' : un
       {links.map((l) => <a href={l.href} aria-current={cur(l.href)}>{l.label}</a>)}
       <a class="btn" href="/quote" aria-current={quoteCur}>Request a quote</a>
       <a class="nav__call" href={`tel:${site.phoneTel}`}>Call {site.phone}</a>
+      <a class="nav__call" href={site.messenger} target="_blank" rel="noopener">Message us on Messenger</a>
     </div>
   </details>
 </header>
