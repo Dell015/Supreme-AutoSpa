@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import Img from '../components/Img.astro';
+import { photos, galleryOrder, site } from '../data/site';
+const filters = [['all', 'All'], ['car', 'Cars'], ['suv', 'SUVs'], ['pickup', 'Pickups'], ['bike', 'Motorcycles'], ['bay', 'The bay'], ['shop', 'The shop']];
+---
+<Base title="Gallery" description="Real photos from Supreme AutoSpa in Cauayan City: SUVs, pickups, coupes and scooters in our wash bay.">
+  <section class="wrap pagehead">
+    <p class="crumbs"><a href="/">Home</a> / Gallery</p>
+    <h1 class="display"><span data-line>The work</span></h1>
+    <p class="lead">Every photo was taken at the shop. Tap one to enlarge.</p>
+  </section>
+  <section class="band band--tight-top">
+    <div class="wrap">
+      <div class="filters" role="group" aria-label="Filter photos">
+        {filters.map(([k, l]) => (<button type="button" data-filter={k} aria-pressed={k === 'all' ? 'true' : 'false'}>{l}</button>))}
+      </div>
+      <div class="gal" data-gallery>
+        {galleryOrder.map((k) => { const p = photos[k]; return (
+          <figure data-tags={p.tags.join(' ')}>
+            <button type="button" data-full={`/img/${p.file}.webp`} data-alt={p.alt} data-caption={p.caption} aria-label={`Enlarge: ${p.caption}`}>
+              <div class="ph"><Img name={k} sizes="(max-width: 700px) 100vw, 33vw" /></div>
+            </button>
+            <figcaption>{p.caption}</figcaption>
+          </figure>
+        ); })}
+      </div>
+      <dialog class="lb" aria-label="Photo viewer">
+        <div class="lb__body">
+          <img src="" alt="" />
+          <div class="lb__bar">
+            <span data-cap></span>
+            <div class="lb__nav">
+              <button type="button" data-prev>Previous</button>
+              <button type="button" data-next>Next</button>
+              <button type="button" data-close>Close</button>
+            </div>
+          </div>
+        </div>
+      </dialog>
+    </div>
+  </section>
+</Base>

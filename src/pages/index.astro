@@ -1,0 +1,200 @@
+---
+import Base from '../layouts/Base.astro';
+import Img from '../components/Img.astro';
+import Arrow from '../components/Arrow.astro';
+import { site, groups, reviews, photos } from '../data/site';
+
+const faqs = [
+  { q: 'How do I get a price?', a: 'We quote per vehicle and per job. Send your car model and what you want done, with photos if you can, and we will reply with a price.' },
+  { q: 'Can I just drive in?', a: `We are open ${site.hours.days}, ${site.hours.label}. For repainting and coatings, request a quote first so we can plan the work properly.` },
+  { q: 'What can you work on?', a: 'Any vehicle. Cars, SUVs, pickups, motorcycles and more. If it has wheels and needs care, ask us.' },
+  { q: 'Is there somewhere to wait?', a: 'Yes. There is a comfortable waiting area at the shop, so you can sit while your vehicle is washed.' },
+  { q: 'Which services do you offer?', a: 'Carwash, engine wash, undercarriage rinsing, interior and exterior detailing, headlight restoration, asphalt, acid rain and sticker removal, Back to Zero, seat covers, ceramic and graphene coating, PMS and car repainting.' },
+  { q: 'Coming from outside Cauayan?', a: 'You are welcome. Message us before you drive over, especially for repainting or coating jobs, so we can confirm your slot.' },
+];
+const faqLd = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) };
+---
+<Base title={site.name} description="Car wash, detailing, ceramic and graphene coating and car repainting in Cauayan City, Isabela. Premium car care in a relaxing space. Request a quote.">
+  <script type="application/ld+json" set:html={JSON.stringify(faqLd)} />
+
+  <!-- Hero -->
+  <section class="hero" aria-label="Welcome">
+    <div class="hero__stage">
+      <h1 class="hero__title">
+        <span class="hero__name hero__name--a display"><span class="line"><span data-line style="--i:0">Supreme</span></span></span>
+        <span class="hero__name hero__name--b display"><span class="line"><span data-line style="--i:1">AutoSpa</span></span></span>
+        <span class="vh">: car wash, detailing and repainting in Cauayan City</span>
+      </h1>
+      <div class="hero__mid">
+        <p class="lead" data-load style="--d:420ms" set:html={site.tagline.replace('top-notch', '<span class="nb">top-notch</span>')}></p>
+        <div class="hero__actions" data-load style="--d:520ms">
+          <a class="btn" href="/quote">Request a quote <Arrow /></a>
+          <a class="arrow-link" href="#reviews">Read what customers say <Arrow /></a>
+        </div>
+        <p class="status" data-load style="--d:620ms" data-status data-opens={site.hours.opens} data-closes={site.hours.closes} data-state="open">
+          <span class="status__dot" aria-hidden="true"></span>
+          <span data-status-label>Open {site.hours.days}, {site.hours.label}</span>
+        </p>
+      </div>
+      <div class="hero__photo" data-open>
+        <Img name="sign-vintage-4x4" eager sizes="(max-width: 900px) 100vw, 34vw" fit="95% 50%" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews: real screenshots, unedited -->
+  <section class="band band--stone on-stone" id="reviews" aria-labelledby="reviews-h">
+    <div class="wrap">
+      <div class="sec-head sec-head--split">
+        <h2 class="title" id="reviews-h" data-reveal>Real reviews, shown as received</h2>
+        <p data-reveal style="--i:1">Screenshots from Google, Messenger and Facebook, exactly as they arrived. Drag or swipe to read them all.</p>
+      </div>
+      <div class="reel" tabindex="0" role="region" aria-label="Customer reviews, scrolls sideways">
+        {reviews.map((r, i) => (
+          <figure data-reveal style={`--i:${i}`}>
+            <img src={`/img/${r.file}.webp`} width={r.w} height={r.h} alt={r.alt} loading="lazy" decoding="async" />
+            <figcaption>{r.label}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="reel-hint">
+        <p class="small muted">Customer names are shown as they appear in the original messages.</p>
+        <a class="arrow-link" href={site.mapsUrl} target="_blank" rel="noopener">See all reviews on Google <Arrow /></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Work: sticky intro, real photos -->
+  <section class="band" aria-labelledby="work-h">
+    <div class="wrap work">
+      <div class="work__intro">
+        <h2 class="title" id="work-h" data-reveal>Any vehicle, same care.</h2>
+        <p class="lead" data-reveal style="--i:1">SUVs, pickups, coupes, scooters and one very old 4x4. Every photo here was taken at the shop.</p>
+        <a class="btn btn--ghost" href="/gallery" data-reveal style="--i:2">See the full gallery <Arrow /></a>
+      </div>
+      <div class="work__stack">
+        <figure><div class="ph ar-wide" data-wipe><Img name="bmw-4-series" sizes="(max-width: 900px) 100vw, 58vw" fit="50% 60%" /></div><figcaption>{photos['bmw-4-series'].caption}</figcaption></figure>
+        <div class="work__row work__row--two">
+          <figure><div class="ph ar-tall" data-wipe><Img name="adv-motorcycle-hex-bay" sizes="(max-width: 900px) 50vw, 28vw" /></div><figcaption>{photos['adv-motorcycle-hex-bay'].caption}</figcaption></figure>
+          <figure><div class="ph ar-tall" data-wipe style="--i:1"><Img name="fortuner-trd-front" sizes="(max-width: 900px) 50vw, 28vw" fit="50% 50%" /></div><figcaption>{photos['fortuner-trd-front'].caption}</figcaption></figure>
+        </div>
+        <figure><div class="ph ar-wide" data-wipe><Img name="jeep-wrangler" sizes="(max-width: 900px) 100vw, 58vw" /></div><figcaption>{photos['jeep-wrangler'].caption}</figcaption></figure>
+        <div class="work__row work__row--two">
+          <figure><div class="ph ar-tall" data-wipe><Img name="classic-4x4-wash" sizes="(max-width: 900px) 50vw, 28vw" fit="30% 50%" /></div><figcaption>{photos['classic-4x4-wash'].caption}</figcaption></figure>
+          <figure><div class="ph ar-tall" data-wipe style="--i:1"><Img name="hilux-undercarriage-ramp" sizes="(max-width: 900px) 50vw, 28vw" /></div><figcaption>{photos['hilux-undercarriage-ramp'].caption}</figcaption></figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="band band--stone on-stone" aria-labelledby="svc-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="title" id="svc-h" data-reveal>What we do</h2>
+      </div>
+      <div class="svc">
+        {groups.map((g, i) => (
+          <div class="svc__col" data-reveal style={`--i:${i}`}>
+            <h3>{g.title}</h3>
+            <ul>
+              {g.items.map((it) => (
+                <li>
+                  <button type="button" data-text={it.text}>{it.name}</button>
+                  <p class="svc__sum small">{it.text}</p>
+                </li>
+              ))}
+            </ul>
+            <a class="arrow-link" href={`/services/${g.slug}`}>{g.short} <Arrow /></a>
+          </div>
+        ))}
+        <p class="svc__tip" data-tip data-fallback="Point at a service to see what it is." data-empty="true">Point at a service to see what it is.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How a quote works -->
+  <section class="band band--surface" aria-labelledby="quote-h">
+    <div class="wrap slipwrap">
+      <div class="slipwrap__text">
+        <h2 class="title" id="quote-h" data-reveal>How a quote works</h2>
+        <p class="lead" data-reveal style="--i:1">No guessing and no surprises. You tell us the car and the job, we tell you the price, and we agree before any work starts.</p>
+        <a class="btn" href="/quote" data-reveal style="--i:2">Request a quote <Arrow /></a>
+      </div>
+      <div class="slip">
+        <h3>Before you come</h3>
+        <dl>
+          <div class="row" style="--i:0"><dt>Send your car and the job</dt><span class="dots" aria-hidden="true"></span><dd>You</dd></div>
+          <div class="row" style="--i:1"><dt>We ask for photos if needed</dt><span class="dots" aria-hidden="true"></span><dd>Us</dd></div>
+          <div class="row" style="--i:2"><dt>We reply with a price</dt><span class="dots" aria-hidden="true"></span><dd>Us</dd></div>
+        </dl>
+        <h3>At the shop</h3>
+        <dl>
+          <div class="row" style="--i:3"><dt>Bring the car in</dt><span class="dots" aria-hidden="true"></span><dd>You</dd></div>
+          <div class="row" style="--i:4"><dt>We check it and confirm the job</dt><span class="dots" aria-hidden="true"></span><dd>Us</dd></div>
+          <div class="row" style="--i:5"><dt>We do the work</dt><span class="dots" aria-hidden="true"></span><dd>Us</dd></div>
+        </dl>
+        <h3>Handover</h3>
+        <dl>
+          <div class="row" style="--i:6"><dt>Look it over together</dt><span class="dots" aria-hidden="true"></span><dd>Both</dd></div>
+          <div class="row" style="--i:7"><dt>Drive away happy</dt><span class="dots" aria-hidden="true"></span><dd>You</dd></div>
+        </dl>
+        <div class="final"><span>Open {site.hours.days}</span><span class="num">{site.hours.label}</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The place -->
+  <section class="band band--stone on-stone" aria-labelledby="place-h">
+    <div class="wrap place">
+      <div class="place__photo" data-wipe><Img name="shop-exterior" sizes="(max-width: 900px) 100vw, 58vw" /></div>
+      <div class="place__text">
+        <h2 class="title" id="place-h" data-reveal>Wait in comfort</h2>
+        <p class="lead" data-reveal style="--i:1">Timber, stone and copper roofs, with a comfortable waiting area while we work.</p>
+        <dl class="place__facts" data-reveal style="--i:2">
+          <div><dt>Address</dt><dd>{site.address.street}, {site.address.city}, {site.address.region} {site.address.postal}</dd></div>
+          <div><dt>Hours</dt><dd class="num">Every day, {site.hours.label}</dd></div>
+        </dl>
+        <a class="btn" href={site.mapsUrl} target="_blank" rel="noopener" data-reveal style="--i:3">Open in Google Maps <Arrow /></a>
+      </div>
+      <div class="place__map">
+        <iframe title="Map showing Supreme AutoSpa on Roque Menor St, Cauayan City" src={site.mapsEmbed} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="band" aria-labelledby="faq-h">
+    <div class="wrap faq">
+      <h2 class="title" id="faq-h" data-reveal>Good to know</h2>
+      <div class="faq__list">
+        {faqs.map((f, i) => (
+          <details data-reveal style={`--i:${i % 3}`} open={i === 0}>
+            <summary>{f.q}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><path d="M5 9l7 7 7-7"/></svg></summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact statement -->
+  <section class="contact on-stone" aria-labelledby="contact-h">
+    <div class="contact__top">
+      <h2 id="contact-h" class="vh">Contact</h2>
+      <p>Tell us your car and the job. We will send a price.</p>
+      <a class="btn" href="/quote">Request a quote <Arrow /></a>
+    </div>
+    <a class="contact__mail" href={`mailto:${site.email}`} aria-label={`Email ${site.email}`}>
+      <span>supreme.autospa2026@</span><span>gmail.com</span>
+    </a>
+    <div class="contact__bottom">
+      <p>{site.phone} · {site.address.city}</p>
+      <ul>
+        <li><a href={`tel:${site.phoneTel}`}>Call</a></li>
+        <li><a href={site.messenger} target="_blank" rel="noopener">Messenger</a></li>
+        <li><a href={site.facebook} target="_blank" rel="noopener">Facebook</a></li>
+      </ul>
+    </div>
+  </section>
+</Base>

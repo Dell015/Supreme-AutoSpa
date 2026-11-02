@@ -1,0 +1,21 @@
+---
+import { photos } from '../data/site';
+interface Props { name: string; sizes?: string; eager?: boolean; alt?: string; class?: string; fit?: string; }
+const { name, sizes = '(max-width: 900px) 100vw, 60vw', eager = false, alt, class: cls, fit } = Astro.props;
+const p = photos[name];
+if (!p) throw new Error('Unknown photo: ' + name);
+const small = Math.min(720, p.w);
+---
+<img
+  src={`/img/${p.file}.webp`}
+  srcset={`/img/${p.file}-sm.webp ${small}w, /img/${p.file}.webp ${p.w}w`}
+  sizes={sizes}
+  width={p.w}
+  height={p.h}
+  alt={alt ?? p.alt}
+  loading={eager ? 'eager' : 'lazy'}
+  decoding={eager ? 'sync' : 'async'}
+  fetchpriority={eager ? 'high' : undefined}
+  class={cls}
+  style={fit ? `object-position:${fit}` : undefined}
+/>

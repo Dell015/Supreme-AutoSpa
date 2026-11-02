@@ -1,0 +1,48 @@
+---
+import { site, credit } from '../data/site';
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="footer__row">
+    <div class="footer__places">
+      <a href={site.mapsUrl} rel="noopener" target="_blank">{site.address.street}, {site.address.city}</a>
+      <a href={`tel:${site.phoneTel}`}>{site.phone}</a>
+      <a href={`mailto:${site.email}`}>{site.email}</a>
+    </div>
+    <div class="footer__cols">
+      <div>
+        <h2>Visit</h2>
+        <ul>
+          <li><a href="/services">Services</a></li>
+          <li><a href="/gallery">Gallery</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/quote">Request a quote</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Follow</h2>
+        <ul>
+          <li><a href={site.facebook} rel="noopener" target="_blank">Facebook</a></li>
+          <li><a href={site.messenger} rel="noopener" target="_blank">Messenger</a></li>
+          <li><a href={site.mapsUrl} rel="noopener" target="_blank">Google Maps</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Open</h2>
+        <ul>
+          <li>Every day</li>
+          <li class="num">{site.hours.label}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer__legal">
+    <span>© {year} {site.name}. Cauayan City, Isabela.</span>
+    <span>
+      Concept preview{credit.name ? ' · Website by ' : ''}
+      {credit.name && (credit.url ? <a href={credit.url} rel="noopener">{credit.name}</a> : credit.name)}
+    </span>
+    <a href="#top">Back to top</a>
+  </div>
+  <p class="footer__name display" aria-hidden="true">Supreme AutoSpa</p>
+</footer>

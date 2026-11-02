@@ -1,0 +1,43 @@
+---
+import Base from '../../layouts/Base.astro';
+import Img from '../../components/Img.astro';
+import Arrow from '../../components/Arrow.astro';
+import { groups } from '../../data/site';
+export function getStaticPaths() {
+  const side = { 'car-wash': 'hilux-undercarriage-ramp', detailing: 'engine-wash-hood', repainting: 'fortuner-trd-side' };
+  return groups.map((g) => ({ params: { slug: g.slug }, props: { g, photo: side[g.slug] } }));
+}
+const { g, photo } = Astro.props;
+const others = groups.filter((x) => x.slug !== g.slug);
+---
+<Base title={g.short} description={`${g.short} in Cauayan City: ${g.items.map((i) => i.name.toLowerCase()).join(', ')}. Request a quote from Supreme AutoSpa.`}>
+  <section class="wrap pagehead">
+    <p class="crumbs"><a href="/">Home</a> / <a href="/services">Services</a> / {g.short}</p>
+    <h1 class="display"><span data-line>{g.short}</span></h1>
+    <p class="lead">{g.lead}</p>
+  </section>
+  <section class="band band--stone on-stone">
+    <div class="wrap svcpage">
+      <div class="svcpage__list">
+        {g.items.map((i, n) => (
+          <div class="svcpage__item" data-reveal style={`--i:${Math.min(n, 4)}`}>
+            <h2>{i.name}</h2>
+            <p>{i.text}</p>
+          </div>
+        ))}
+      </div>
+      <div class="svcpage__side">
+        <div class="ph"><Img name={photo} sizes="(max-width: 900px) 100vw, 40vw" /></div>
+        <div class="svcpage__cta">
+          <p class="lead">Ask for a quote on any of these. Photos of the vehicle help.</p>
+          <a class="btn" href={`/quote?service=${g.items.map((i) => i.id).join(',')}`}>Request a quote <Arrow /></a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="band">
+    <div class="wrap svcpage__more">
+      {others.map((o) => (<a href={`/services/${o.slug}`}>{o.short} →</a>))}
+    </div>
+  </section>
+</Base>

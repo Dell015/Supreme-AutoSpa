@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import Arrow from '../components/Arrow.astro';
+import { site, groups, vehicleTypes } from '../data/site';
+---
+<Base title="Request a quote" description="Request a quote from Supreme AutoSpa in Cauayan City. Tell us your vehicle and the service you need.">
+  <section class="wrap pagehead">
+    <p class="crumbs"><a href="/">Home</a> / Request a quote</p>
+    <h1 class="display"><span data-line>Request</span> <span data-line>a quote</span></h1>
+    <p class="lead">Tell us about your vehicle. We reply with a quote, no obligation.</p>
+  </section>
+  <section class="band band--tight-top">
+    <div class="wrap quote">
+      <form data-quote data-email={site.email} data-sms={site.phoneSms} data-endpoint="" novalidate>
+        <div class="field"><label for="name">Your name</label><input id="name" name="name" type="text" autocomplete="name" /></div>
+        <div class="field"><label for="phone">Mobile number</label><input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" /></div>
+        <div class="field"><label for="vehicle">Vehicle (make, model, year)</label><input id="vehicle" name="vehicle" type="text" placeholder="e.g. Toyota Innova 2017" /></div>
+        <div class="field"><label for="vtype">Vehicle type</label>
+          <select id="vtype" name="vtype"><option value="">Choose one</option>{vehicleTypes.map((v) => (<option>{v}</option>))}</select>
+        </div>
+        {groups.map((g) => (
+          <fieldset class="field">
+            <legend>{g.short}</legend>
+            <div class="chips">{g.items.map((i) => (<label><input type="checkbox" name="service" value={i.id} /><span>{i.name}</span></label>))}</div>
+          </fieldset>
+        ))}
+        <div class="field"><label for="when">Preferred day and time</label><input id="when" name="when" type="text" placeholder="e.g. Saturday morning" /></div>
+        <div class="field"><label for="notes">Anything else?</label><textarea id="notes" name="notes"></textarea></div>
+        <button class="btn" type="submit">Build my message <Arrow /></button>
+      </form>
+      <aside>
+        <div class="result" data-result hidden>
+          <h2 class="title" tabindex="-1" style="font-size:1.75rem">Your message is ready</h2>
+          <pre></pre>
+          <div class="result__actions">
+            <a class="btn" data-messenger href={site.messenger} target="_blank" rel="noopener">Send on Messenger</a>
+            <a class="btn btn--ghost" data-sms href="#">Text us</a>
+            <a class="btn btn--ghost" data-mail href="#">Email</a>
+            <button class="btn btn--ghost" type="button" data-copy data-label="Copy message">Copy message</button>
+          </div>
+          <p>On Messenger, paste the copied message into the chat.</p>
+        </div>
+        <dl>
+          <div><dt>Call</dt><dd><a href={`tel:${site.phoneTel}`}>{site.phone}</a></dd></div>
+          <div><dt>Email</dt><dd>{site.email}</dd></div>
+          <div><dt>Visit</dt><dd>{site.address.street}, {site.address.city}<br />Open {site.hours.days}, {site.hours.label}</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+</Base>

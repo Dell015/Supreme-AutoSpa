@@ -1,0 +1,17 @@
+{
+  "name": "supreme-autospa",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "latest",
+    "@fontsource-variable/archivo": "latest",
+    "@fontsource/russo-one": "^5.3.0",
+    "astro": "latest"
+  }
+}

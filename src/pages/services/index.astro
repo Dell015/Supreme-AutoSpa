@@ -1,0 +1,30 @@
+---
+import Base from '../../layouts/Base.astro';
+import Arrow from '../../components/Arrow.astro';
+import { groups } from '../../data/site';
+---
+<Base title="Services" description="Car wash, detailing, coatings and repainting in Cauayan City. Sixteen services for any vehicle. Request a quote.">
+  <section class="wrap pagehead">
+    <p class="crumbs"><a href="/">Home</a> / Services</p>
+    <h1 class="display"><span data-line>Sixteen</span> <span data-line>services</span></h1>
+    <p class="lead">Wash it, detail it, protect it or repaint it. Any vehicle, any make.</p>
+  </section>
+  <section class="band band--stone on-stone">
+    <div class="wrap ovw">
+      {groups.map((g) => (
+        <a href={`/services/${g.slug}`}>
+          <h2>{g.short}</h2>
+          <p>{g.items.map((i) => i.name).join(', ')}.</p>
+          <Arrow />
+        </a>
+      ))}
+    </div>
+  </section>
+  <section class="band">
+    <div class="wrap" style="display:grid;gap:24px;justify-items:start">
+      <h2 class="title">Not sure which one you need?</h2>
+      <p class="lead">Tell us about the vehicle and what bothers you. We will point you to the right service.</p>
+      <a class="btn" href="/quote">Request a quote <Arrow /></a>
+    </div>
+  </section>
+</Base>
