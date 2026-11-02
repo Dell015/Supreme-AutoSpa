@@ -159,7 +159,7 @@ p { text-wrap: pretty; max-width: 62ch; }
 .hero__mid .lead { max-width: 30ch; }
 .hero__actions { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; }
 .hero__photo { grid-column: 9 / 13; grid-row: 1 / 4; margin-right: calc(var(--gutter) * -1); margin-bottom: calc(var(--gutter) * -1); overflow: clip; background: var(--surface); }
-.hero__photo img { width: 100%; height: 100%; object-fit: cover; object-position: 66% 50%; }
+.hero__photo img { width: 100%; height: 100%; object-fit: cover; object-position: 30% 50%; }
 .status { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: var(--step-small); }
 .status__dot { width: 10px; height: 10px; border-radius: 50%; background: #6bc17b; flex: none; }
 .status[data-state='closed'] .status__dot { background: var(--muted); }
@@ -168,7 +168,7 @@ p { text-wrap: pretty; max-width: 62ch; }
   .hero__name { font-size: 16.8cqw; grid-column: 1 / -1; }
   .hero__name--a { grid-row: 1; }
   .hero__photo { grid-column: 1 / -1; grid-row: 2; margin: 16px calc(var(--gutter) * -1) 0; aspect-ratio: 4 / 3.2; }
-  .hero__photo img { object-position: 85% 50%; }
+  .hero__photo img { object-position: 50% 50%; }
   .hero__mid { grid-column: 1 / -1; grid-row: 3; padding: 28px 0 24px; padding-left: 0; }
   .hero__name--b { grid-row: 4; justify-self: end; padding-bottom: 16px; }
 }
@@ -575,3 +575,4 @@ dialog.finder[open]::backdrop { animation: fade-in 300ms ease; }
 /* Nothing should ever widen the page: drifting type and ghost words are clipped, not scrolled. */
 html, body { overflow-x: clip; }
 .hero { overflow-x: clip; }
+.hero__photo picture { display: block; width: 100%; height: 100%; }
