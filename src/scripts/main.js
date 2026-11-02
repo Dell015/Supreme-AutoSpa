@@ -37,6 +37,7 @@ function initMotion() {
   const root = document.documentElement;
   const bar = document.querySelector('.nav');
   document.querySelectorAll('.work .ph img, .place__photo img, .hero__photo img, .about__photos img, .svcpage__side img').forEach((i) => { if (!i.dataset.parallax) i.dataset.parallax = '0.06'; });
+  loop.shp = [...document.querySelectorAll('.shp')];
   loop.slide = [...document.querySelectorAll('[data-slide]')];
   loop.par = [...document.querySelectorAll('[data-parallax]')];
   loop.drift = [...document.querySelectorAll('[data-drift]')];
@@ -59,6 +60,12 @@ function initMotion() {
         const lim = r.height * 0.07;
         const v = Math.max(-lim, Math.min(lim, -d * Number(el.dataset.parallax || 0.06)));
         el.style.setProperty('--py', v.toFixed(1) + 'px');
+      }
+      for (const el of loop.shp) {
+        const r = el.parentElement.getBoundingClientRect();
+        if (r.bottom < -150 || r.top > innerHeight + 150) continue;
+        el.style.setProperty('--sy', ((r.top + r.height / 2 - innerHeight / 2) * Number(el.dataset.depth || 0)).toFixed(1) + 'px');
+        el.style.setProperty('--sr', (y * Number(el.dataset.spin || 0.03)).toFixed(1));
       }
       for (const el of loop.slide) {
         const r = el.getBoundingClientRect();
@@ -150,7 +157,12 @@ function initGallery() {
   buttons.forEach((btn) => btn.addEventListener('click', () => {
     const f = btn.dataset.filter;
     buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
-    figs.forEach((fig) => { fig.hidden = !(f === 'all' || fig.dataset.tags.split(' ').includes(f)); });
+    let n = 0;
+    figs.forEach((fig) => {
+      fig.hidden = !(f === 'all' || fig.dataset.tags.split(' ').includes(f));
+      fig.classList.remove('pop');
+      if (!fig.hidden) { void fig.offsetWidth; fig.style.setProperty('--i', String(Math.min(n++, 12))); fig.classList.add('pop'); }
+    });
   }));
 
   const dlg = document.querySelector('dialog.lb');
@@ -161,6 +173,7 @@ function initGallery() {
   const show = (i) => {
     idx = (i + list.length) % list.length;
     const b = list[idx];
+    img.classList.remove('swap'); void img.offsetWidth; img.classList.add('swap');
     img.src = b.dataset.full; img.alt = b.dataset.alt; cap.textContent = b.dataset.caption;
   };
   root.querySelectorAll('figure button').forEach((b) => b.addEventListener('click', () => {
@@ -262,3 +275,20 @@ function init() {
 }
 
 document.addEventListener('astro:page-load', init);
+
+// Click ripple on buttons and chips.
+if (!window.__ripple) {
+  window.__ripple = true;
+  document.addEventListener('pointerdown', (e) => {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const host = e.target.closest?.('.btn, .jump a, .chips span, .filters button, .tabs button');
+    if (!host) return;
+    const r = host.getBoundingClientRect();
+    const d = Math.max(r.width, r.height) * 2.2;
+    const el = document.createElement('span');
+    el.className = 'ripple';
+    el.style.cssText = `width:${d}px;height:${d}px;left:${e.clientX - r.left}px;top:${e.clientY - r.top}px`;
+    host.appendChild(el);
+    el.addEventListener('animationend', () => el.remove());
+  }, { passive: true });
+}

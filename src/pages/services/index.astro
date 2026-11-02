@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Shapes from '../../components/Shapes.astro';
 import Arrow from '../../components/Arrow.astro';
 import Icon from '../../components/Icon.astro';
 import Img from '../../components/Img.astro';
@@ -11,7 +12,8 @@ const side: Record<string, string[]> = {
 };
 ---
 <Base title="Services" description={`Every service at Supreme AutoSpa in Cauayan City: car wash, detailing, coatings, PMS and repainting. What each one does and what you get. Request a quote.`}>
-  <section class="wrap pagehead" data-lit style="position:relative">
+  <section class="wrap pagehead has-shapes" data-lit>
+    <Shapes v="a" />
     <div class="hexbg" aria-hidden="true"><i data-parallax="0.08"></i></div><div class="hexlit" aria-hidden="true"></div>
     <p class="crumbs"><a href="/">Home</a> / Services</p>
     <h1 class="display"><span data-line>What we do</span></h1>
@@ -22,7 +24,9 @@ const side: Record<string, string[]> = {
   </section>
 
   {groups.map((g, gi) => (
-    <section class={`band ${gi % 2 === 0 ? 'band--stone on-stone' : ''}`} id={g.slug} aria-labelledby={`${g.slug}-h`}>
+    <section class={`band has-shapes ${gi % 2 === 0 ? 'band--stone on-stone' : ''}`} id={g.slug} aria-labelledby={`${g.slug}-h`}>
+      <Shapes v={['b', 'c', 'a'][gi]} />
+      <p class={`ghostword ${gi % 2 === 0 ? '' : 'ghostword--light'}`} aria-hidden="true" data-slide={gi % 2 === 0 ? 0.14 : -0.14}>{['Wash · Rinse · Shine', 'Detail · Restore · Renew', 'Protect · Coat · Repaint'][gi]}</p>
       <div class="wrap sv">
         <div class="sv__intro">
           <h2 class="title" id={`${g.slug}-h`} data-reveal>{g.title}</h2>

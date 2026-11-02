@@ -1,11 +1,13 @@
 ---
+import Shapes from '../components/Shapes.astro';
 import Base from '../layouts/Base.astro';
 import Img from '../components/Img.astro';
 import { photos, galleryOrder, site } from '../data/site';
-const filters = [['all', 'All'], ['car', 'Cars'], ['suv', 'SUVs'], ['pickup', 'Pickups'], ['bike', 'Motorcycles'], ['bay', 'The bay'], ['shop', 'The shop']];
+const filters = [['all', 'All'], ['car', 'Cars'], ['suv', 'SUVs'], ['pickup', 'Pickups'], ['bike', 'Motorcycles'], ['other', 'Heavy equipment'], ['bay', 'The bay'], ['shop', 'The shop']];
 ---
 <Base title="Gallery" description="Real photos from Supreme AutoSpa in Cauayan City: SUVs, pickups, coupes and scooters in our wash bay.">
-  <section class="wrap pagehead">
+  <section class="wrap pagehead has-shapes">
+    <Shapes v="c" />
     <p class="crumbs"><a href="/">Home</a> / Gallery</p>
     <h1 class="display"><span data-line>The work</span></h1>
     <p class="lead">Every photo was taken at the shop. Tap one to enlarge.</p>

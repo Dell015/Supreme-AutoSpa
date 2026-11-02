@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Shapes from '../components/Shapes.astro';
 import Arrow from '../components/Arrow.astro';
 import { site, groups, vehicleTypes } from '../data/site';
 const paint = ['Good, just needs a clean', 'Dull or faded', 'Scratches or swirl marks', 'Chips, dents or rust spots', 'Peeling or damaged'];
@@ -7,7 +8,8 @@ const interior = ['Lightly used', 'Dirty or dusty', 'Stains or bad odor', 'Heavi
 const slots = ['Morning (6 AM to 11 AM)', 'Midday (11 AM to 2 PM)', 'Afternoon (2 PM to 7 PM)', 'Any time'];
 ---
 <Base title="Request a quote" description="Request a quote from Supreme AutoSpa in Cauayan City. Tell us your vehicle, its condition and the services you need, and we reply with an estimate.">
-  <section class="wrap pagehead">
+  <section class="wrap pagehead has-shapes">
+    <Shapes v="b" />
     <p class="crumbs"><a href="/">Home</a> / Request a quote</p>
     <h1 class="display"><span data-line>Request</span> <span data-line>a quote</span></h1>
     <p class="lead">The more you tell us, the closer our estimate. It takes about two minutes.</p>

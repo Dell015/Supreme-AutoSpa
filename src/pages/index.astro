@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Img from '../components/Img.astro';
 import Arrow from '../components/Arrow.astro';
 import Icon from '../components/Icon.astro';
+import Shapes from '../components/Shapes.astro';
 import { site, groups, reviews, photos, allServices } from '../data/site';
 
 const faqs = [
@@ -21,6 +22,7 @@ const faqLd = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity
   <!-- Hero -->
   <section class="hero" aria-label="Welcome" data-lit>
     <div class="hexbg" aria-hidden="true"><i data-parallax="0.08"></i></div><div class="hexlit" aria-hidden="true"></div>
+    <Shapes v="a" />
     <div class="hero__stage">
       <h1 class="hero__title">
         <span class="hero__name hero__name--a display" data-drift="-0.22"><span class="line"><span data-line style="--i:0">Supreme</span></span></span>
@@ -40,14 +42,16 @@ const faqLd = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity
         </p>
       </div>
       <div class="hero__photo" data-open>
-        <Img name="shop-evening" eager sizes="(max-width: 900px) 100vw, 34vw" />
+        <Img name="shop-evening" eager sizes="(max-width: 900px) 120vw, 1300px" />
       </div>
     </div>
   </section>
 
 
   <!-- Reviews: real screenshots, unedited -->
-  <section class="band band--stone on-stone" id="reviews" aria-labelledby="reviews-h">
+  <section class="band band--stone on-stone has-shapes" id="reviews" aria-labelledby="reviews-h">
+    <Shapes v="b" />
+    <p class="ghostword" aria-hidden="true" data-slide="0.14">Real · Honest · Verified</p>
     <div class="wrap">
       <div class="sec-head sec-head--split">
         <h2 class="title" id="reviews-h" data-reveal>Real reviews, shown as received</h2>
@@ -69,7 +73,9 @@ const faqLd = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity
   </section>
 
   <!-- Work: sticky intro, real photos -->
-  <section class="band" aria-labelledby="work-h">
+  <section class="band has-shapes" aria-labelledby="work-h">
+    <Shapes v="c" />
+    <p class="ghostword ghostword--light" aria-hidden="true" data-slide="-0.16">Spotless · Glossy · Fresh</p>
     <div class="wrap work">
       <div class="work__intro">
         <h2 class="title" id="work-h" data-reveal>Any vehicle, same care.</h2>
@@ -92,7 +98,8 @@ const faqLd = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity
   </section>
 
   <!-- Services -->
-  <section class="band band--stone on-stone band--rel" aria-labelledby="svc-h">
+  <section class="band band--stone on-stone has-shapes" aria-labelledby="svc-h">
+    <Shapes v="a" />
     <p class="ghostword" aria-hidden="true" data-slide="-0.18">Wash · Detail · Protect · Repaint</p>
     <div class="wrap">
       <div class="sec-head">
@@ -123,7 +130,9 @@ const faqLd = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity
   </section>
 
   <!-- How a quote works -->
-  <section class="band band--surface" aria-labelledby="quote-h">
+  <section class="band band--surface has-shapes" aria-labelledby="quote-h">
+    <Shapes v="b" />
+    <p class="ghostword ghostword--light" aria-hidden="true" data-slide="0.15">Get a quote · Get a quote</p>
     <div class="wrap slipwrap">
       <div class="slipwrap__text">
         <h2 class="title" id="quote-h" data-reveal>How a quote works</h2>
@@ -155,7 +164,9 @@ const faqLd = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity
 
 
   <!-- The place -->
-  <section class="band band--stone on-stone" aria-labelledby="place-h">
+  <section class="band band--stone on-stone has-shapes" aria-labelledby="place-h">
+    <Shapes v="c" />
+    <p class="ghostword" aria-hidden="true" data-slide="-0.14">Visit us · Roque Menor St</p>
     <div class="wrap place">
       <div class="place__photo" data-wipe><Img name="shop-exterior" sizes="(max-width: 900px) 100vw, 58vw" /></div>
       <div class="place__text">
@@ -174,7 +185,8 @@ const faqLd = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity
   </section>
 
   <!-- FAQ -->
-  <section class="band" aria-labelledby="faq-h">
+  <section class="band has-shapes" aria-labelledby="faq-h">
+    <Shapes v="a" />
     <div class="wrap faq">
       <h2 class="title" id="faq-h" data-reveal>Good to know</h2>
       <div class="faq__list">
@@ -189,7 +201,8 @@ const faqLd = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity
   </section>
 
   <!-- Contact statement -->
-  <section class="contact on-stone" aria-labelledby="contact-h">
+  <section class="contact on-stone has-shapes" aria-labelledby="contact-h">
+    <Shapes v="b" />
     <div class="contact__top">
       <h2 id="contact-h" class="vh">Contact</h2>
       <p>Tell us your car and the job. We will send a price.</p>

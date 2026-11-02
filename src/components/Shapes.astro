@@ -1,0 +1,39 @@
+---
+// Floating geometric shapes drawn from the logo: the blue square frame, rings, hexes and plus marks.
+// They drift on their own, parallax with scroll (up and down) and turn as you scroll.
+const { v = 'a' } = Astro.props;
+type S = [string, string, string, string, string, number, number, string, number];
+// [type, color, x, y, size, rotation, depth, float seconds, opacity]
+const L: Record<string, S[]> = {
+  a: [
+    ['frame', 'blue', '78%', '6%', 'clamp(110px,15vw,240px)', 12, 0.2, '18s', 0.55],
+    ['solid', 'copper', '92%', '46%', 'clamp(18px,2vw,32px)', 20, -0.12, '11s', 0.9],
+    ['ring', 'copper', '3%', '64%', 'clamp(70px,9vw,150px)', 0, 0.14, '15s', 0.5],
+    ['plus', 'blue', '66%', '82%', 'clamp(26px,3vw,48px)', 0, -0.2, '13s', 0.7],
+    ['hex', 'copper', '44%', '90%', 'clamp(40px,5vw,84px)', 0, 0.1, '17s', 0.35],
+    ['solid', 'blue', '12%', '16%', 'clamp(14px,1.4vw,22px)', 45, -0.16, '9s', 0.8],
+  ],
+  b: [
+    ['frame', 'blue', '4%', '10%', 'clamp(90px,12vw,200px)', -10, 0.16, '16s', 0.5],
+    ['hex', 'copper', '86%', '14%', 'clamp(50px,6vw,100px)', 0, -0.14, '14s', 0.4],
+    ['ring', 'blue', '90%', '70%', 'clamp(80px,10vw,170px)', 0, 0.2, '19s', 0.45],
+    ['solid', 'copper', '30%', '88%', 'clamp(16px,1.8vw,28px)', 12, -0.1, '10s', 0.9],
+    ['plus', 'copper', '58%', '8%', 'clamp(24px,2.6vw,42px)', 0, 0.18, '12s', 0.7],
+    ['frame', 'copper', '70%', '84%', 'clamp(46px,5vw,84px)', 30, -0.18, '15s', 0.5],
+  ],
+  c: [
+    ['ring', 'copper', '88%', '8%', 'clamp(100px,13vw,220px)', 0, 0.18, '20s', 0.45],
+    ['frame', 'blue', '2%', '70%', 'clamp(120px,14vw,230px)', 8, 0.22, '17s', 0.5],
+    ['solid', 'blue', '60%', '6%', 'clamp(16px,1.6vw,26px)', 30, -0.12, '9s', 0.85],
+    ['hex', 'blue', '94%', '58%', 'clamp(44px,5.5vw,90px)', 0, -0.16, '13s', 0.4],
+    ['plus', 'copper', '20%', '10%', 'clamp(26px,3vw,48px)', 0, 0.12, '14s', 0.7],
+    ['solid', 'copper', '74%', '90%', 'clamp(20px,2.2vw,36px)', 45, 0.14, '11s', 0.9],
+  ],
+};
+const list = L[v] ?? L.a;
+---
+<div class="shapes" aria-hidden="true">
+  {list.map(([t, c, x, y, s, r, d, f, o], i) => (
+    <i class={`shp shp--${t} c-${c}`} data-depth={d} data-spin={i % 2 ? 0.03 : -0.03} style={`--x:${x};--y:${y};--s:${s};--r:${r};--t:${f};--o:${o};--dl:${-i * 2.3}s`}></i>
+  ))}
+</div>

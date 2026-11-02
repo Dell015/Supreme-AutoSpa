@@ -1,15 +1,19 @@
 ---
 import Base from '../layouts/Base.astro';
 import Img from '../components/Img.astro';
+import Shapes from '../components/Shapes.astro';
 import Arrow from '../components/Arrow.astro';
 import { site } from '../data/site';
 ---
 <Base title="About" description="Supreme AutoSpa is a new car care shop on Roque Menor St, Cauayan City, built around a comfortable place to wait while your vehicle is looked after.">
-  <section class="wrap pagehead">
+  <section class="wrap pagehead has-shapes">
+    <Shapes v="a" />
     <p class="crumbs"><a href="/">Home</a> / About</p>
     <h1 class="display"><span data-line>Car care,</span> <span data-line>in comfort</span></h1>
   </section>
-  <section class="band band--stone on-stone">
+  <section class="band band--stone on-stone has-shapes">
+    <Shapes v="c" />
+    <p class="ghostword" aria-hidden="true" data-slide="0.14">Calm · Clean · Cared for</p>
     <div class="wrap about">
       <div class="about__text">
         <p class="lead" data-reveal>Supreme AutoSpa is a new car care shop in Cauayan City. We wash, detail, coat and repaint vehicles of every kind.</p>

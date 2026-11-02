@@ -1,9 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
+import Shapes from '../components/Shapes.astro';
 import Arrow from '../components/Arrow.astro';
 ---
 <Base title="Page not found" description="This page does not exist." noindex>
-  <section class="wrap nf">
+  <section class="wrap nf has-shapes">
+    <Shapes v="c" />
     <h1 class="display">404</h1>
     <p class="lead">That page took a wrong turn.</p>
     <a class="btn" href="/">Back home <Arrow /></a>

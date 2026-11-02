@@ -114,7 +114,7 @@ export const photos: Record<string, Photo> = {
   'fortuner-trd-side': { file: 'fortuner-trd-side', w: 1600, h: 1200, alt: 'White Toyota Fortuner TRD parked in the wash bay under the hex-light ceiling', caption: 'Toyota Fortuner TRD', tags: ['suv', 'bay'] },
   'fortuner-trd-front': { file: 'fortuner-trd-front', w: 1600, h: 1200, alt: 'Front of a white Toyota Fortuner TRD with the hex lights reflected on the hood', caption: 'Fortuner TRD, hex lights on the hood', tags: ['suv', 'bay'] },
   'fortuner-stone-ramp': { file: 'fortuner-stone-ramp', w: 590, h: 443, alt: 'White Fortuner on the stone display ramp beside the shop', caption: 'Fortuner on the stone ramp', tags: ['suv', 'shop'] },
-  'shop-evening': { file: 'shop-evening', w: 1600, h: 1200, alt: 'Supreme AutoSpa at dusk with warm lights, the sign and cars in the bays', caption: 'The shop at dusk', tags: ['shop'] },
+  'shop-evening': { file: 'shop-evening', w: 2400, h: 1800, alt: 'Supreme AutoSpa at dusk with warm lights, the sign and cars in the bays', caption: 'The shop at dusk', tags: ['shop'] },
   'adv-motorcycle-hex-bay': { file: 'adv-motorcycle-hex-bay', w: 1536, h: 2048, alt: 'Adventure scooter parked in front of an SUV under the hex ceiling lights', caption: 'Adventure scooter in the bay', tags: ['bike', 'bay'] },
   'bmw-4-series': { file: 'bmw-4-series', w: 1600, h: 1200, alt: 'Dark grey BMW coupe parked in the wash bay', caption: 'BMW coupe', tags: ['car', 'bay'] },
   'hilux-ramp-wide': { file: 'hilux-ramp-wide', w: 1600, h: 739, alt: 'White Toyota Hilux raised on the stone wash ramp', caption: 'Toyota Hilux on the wash ramp', tags: ['pickup', 'shop'] },
