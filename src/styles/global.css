@@ -250,7 +250,7 @@ p { text-wrap: pretty; max-width: 62ch; }
 /* Place */
 .place { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); row-gap: 48px; align-items: start; }
 .place__photo { grid-column: 1 / 8; overflow: clip; background: var(--surface); }
-.place__photo img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: 60% 50%; }
+.place__photo img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; object-position: 60% 50%; }
 .place__text { grid-column: 9 / 13; display: grid; gap: 24px; align-content: start; }
 .place__facts { display: grid; gap: 18px; }
 .place__facts dt { font-weight: 800; }
