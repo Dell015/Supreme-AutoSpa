@@ -1,30 +1,48 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Arrow from '../../components/Arrow.astro';
-import { groups } from '../../data/site';
+import Icon from '../../components/Icon.astro';
+import { groups, allServices } from '../../data/site';
 ---
-<Base title="Services" description="Car wash, detailing, coatings and repainting in Cauayan City. Sixteen services for any vehicle. Request a quote.">
-  <section class="wrap pagehead">
+<Base title="Services" description={`Car wash, detailing, coatings and repainting in Cauayan City. ${allServices.length} services for any vehicle. Pick what you need and request a quote.`}>
+  <section class="wrap pagehead" data-lit style="position:relative">
+    <div class="hexbg" aria-hidden="true"><i data-parallax="0.08"></i></div><div class="hexlit" aria-hidden="true"></div>
     <p class="crumbs"><a href="/">Home</a> / Services</p>
-    <h1 class="display"><span data-line>Sixteen</span> <span data-line>services</span></h1>
-    <p class="lead">Wash it, detail it, protect it or repaint it. Any vehicle, any make.</p>
+    <h1 class="display"><span data-line>All</span> <span data-line>{allServices.length} services</span></h1>
+    <p class="lead">Tap the ones you need. We build your quote request from them.</p>
   </section>
-  <section class="band band--stone on-stone">
-    <div class="wrap ovw">
-      {groups.map((g) => (
-        <a href={`/services/${g.slug}`}>
-          <h2>{g.short}</h2>
-          <p>{g.items.map((i) => i.name).join(', ')}.</p>
-          <Arrow />
-        </a>
-      ))}
+
+  <section class="band band--tight-top" data-filter-root style="padding-top:0">
+    <div class="wrap">
+      <div class="svcbar">
+        <label class="finder__search">
+          <span class="vh">Search services</span>
+          <input type="search" placeholder="Search, e.g. headlight, coating" data-q autocomplete="off" />
+        </label>
+        <div class="tabs" role="group" aria-label="Service type">
+          <button type="button" data-tab="all" aria-pressed="true">All</button>
+          {groups.map((g) => <button type="button" data-tab={g.slug} aria-pressed="false">{g.title}</button>)}
+        </div>
+      </div>
+      <ul class="cards">
+        {groups.flatMap((g) => g.items.map((i, n) => (
+          <li data-item data-group={g.slug} data-search={`${i.name} ${i.text}`.toLowerCase()} data-reveal style={`--i:${n % 4}`}>
+            <button type="button" class="card" data-svc={i.id} aria-pressed="false">
+              <Icon id={i.id} class="card__ico" />
+              <b>{i.name}</b>
+              <span>{i.text}</span>
+              <em class="card__add"><i class="plus" aria-hidden="true"></i><span class="card__off">Add to quote</span><span class="card__on">Added</span></em>
+            </button>
+          </li>
+        )))}
+      </ul>
+      <p class="finder__none" data-none hidden>Nothing matches that. Try another word, or just ask us.</p>
+      <p class="svcbar__more">Prefer a closer look? <a href="/services/car-wash">Wash</a>, <a href="/services/detailing">Detailing</a>, <a href="/services/repainting">Coatings and repainting</a>.</p>
     </div>
   </section>
-  <section class="band">
-    <div class="wrap" style="display:grid;gap:24px;justify-items:start">
-      <h2 class="title">Not sure which one you need?</h2>
-      <p class="lead">Tell us about the vehicle and what bothers you. We will point you to the right service.</p>
-      <a class="btn" href="/quote">Request a quote <Arrow /></a>
-    </div>
-  </section>
+
+  <div class="qbar" data-quote-bar data-on="false">
+    <span data-count-label>Tap services to add them</span>
+    <a class="btn" href="/quote" data-quote-link>Request a quote <Arrow /></a>
+  </div>
 </Base>

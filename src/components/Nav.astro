@@ -2,7 +2,7 @@
 import { site } from '../data/site';
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const links = [
-  { href: '/services', label: 'Services' },
+  { href: '/services', label: 'Services', finder: true },
   { href: '/gallery', label: 'Gallery' },
   { href: '/about', label: 'About' },
 ];
@@ -11,14 +11,14 @@ const cur = (h: string) => (path === h || path.startsWith(h + '/') ? 'page' : un
 <header class="nav" transition:persist="nav">
   <a class="nav__brand" href="/" aria-label={`${site.name}, home`}>Supreme AutoSpa</a>
   <nav class="nav__links" aria-label="Main">
-    {links.map((l) => <a href={l.href} aria-current={cur(l.href)}>{l.label}</a>)}
+    {links.map((l) => <a href={l.href} aria-current={cur(l.href)} data-open-finder={l.finder ? '' : undefined}>{l.label}{l.finder && <span class="chev" aria-hidden="true"></span>}</a>)}
   </nav>
-  <a class="btn nav__cta" href="/quote">Request a quote</a>
+  <a class="btn nav__cta" href="/quote" data-quote-link>Request a quote<span class="badge" data-badge hidden></span></a>
   <details class="nav__menu">
     <summary aria-label="Menu">Menu</summary>
     <div class="nav__sheet">
       {links.map((l) => <a href={l.href}>{l.label}</a>)}
-      <a class="btn" href="/quote">Request a quote</a>
+      <a class="btn" href="/quote" data-quote-link>Request a quote</a>
     </div>
   </details>
 </header>

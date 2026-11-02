@@ -1,0 +1,8 @@
+---
+import { site } from '../data/site';
+---
+<div class="mbar" role="navigation" aria-label="Quick actions">
+  <button type="button" data-open-finder>Services</button>
+  <a href={`tel:${site.phoneTel}`}>Call</a>
+  <a class="mbar__quote" href="/quote" data-quote-link>Quote<span class="badge" data-badge hidden></span></a>
+</div>

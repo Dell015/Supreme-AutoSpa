@@ -1,0 +1,39 @@
+---
+import Icon from './Icon.astro';
+import Arrow from './Arrow.astro';
+import { groups } from '../data/site';
+---
+<dialog class="finder" aria-labelledby="finder-h" data-finder>
+  <div class="finder__panel" data-filter-root>
+    <div class="finder__top">
+      <h2 id="finder-h">What does your vehicle need?</h2>
+      <button type="button" class="finder__x" data-finder-close aria-label="Close">Close</button>
+    </div>
+    <label class="finder__search">
+      <span class="vh">Search services</span>
+      <input type="search" placeholder="Search, e.g. headlight, coating" data-q autocomplete="off" />
+    </label>
+    <div class="tabs" role="group" aria-label="Service type">
+      <button type="button" data-tab="all" aria-pressed="true">All</button>
+      {groups.map((g) => <button type="button" data-tab={g.slug} aria-pressed="false">{g.title}</button>)}
+    </div>
+    <div class="finder__scroll">
+    <ul class="finder__list">
+      {groups.flatMap((g) => g.items.map((i) => (
+        <li data-item data-group={g.slug} data-search={`${i.name} ${i.text}`.toLowerCase()}>
+          <button type="button" class="opt" data-svc={i.id} aria-pressed="false">
+            <Icon id={i.id} />
+            <span class="opt__t"><b>{i.name}</b><small>{i.text}</small></span>
+            <span class="opt__add" aria-hidden="true"></span>
+          </button>
+        </li>
+      )))}
+    </ul>
+    <p class="finder__none" hidden>Nothing matches that. Try another word, or just ask us.</p>
+    </div>
+    <div class="finder__bar">
+      <span data-count-label>Tap services to add them</span>
+      <a class="btn" href="/quote" data-quote-link>Request a quote <Arrow /></a>
+    </div>
+  </div>
+</dialog>
