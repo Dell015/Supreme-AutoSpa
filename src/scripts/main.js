@@ -263,8 +263,17 @@ function initQuote() {
 
 function closeMenu() { document.querySelectorAll('.nav__menu[open]').forEach((d) => d.removeAttribute('open')); }
 
+function initTop() {
+  const t = document.querySelector('.totop'); if (!t) return;
+  const on = () => t.classList.toggle('is-on', scrollY > 700);
+  on(); addEventListener('scroll', on, { passive: true });
+  t.addEventListener('click', () => scrollTo({ top: 0, behavior: REDUCED() ? 'auto' : 'smooth' }));
+  document.addEventListener('astro:before-swap', () => removeEventListener('scroll', on), { once: true });
+}
+
 function init() {
   closeMenu();
+  initTop();
   initReveals();
   initStatus();
   initMotion();

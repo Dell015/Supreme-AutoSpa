@@ -14,13 +14,14 @@ const cur = (h: string) => (path === h || path.startsWith(h + '/') ? 'page' : un
   <nav class="nav__links" aria-label="Main">
     {links.map((l) => <a href={l.href} aria-current={cur(l.href)}>{l.label}</a>)}
   </nav>
-  <a class="btn nav__cta" href="/quote" aria-current={quoteCur}>Request a quote</a>
+  <a class="btn nav__cta" href="/quote" aria-current={quoteCur}><span class="long">Request a quote</span><span class="short">Quote</span></a>
   <details class="nav__menu">
     <summary aria-label="Menu">Menu</summary>
     <div class="nav__sheet">
       <a href="/" aria-current={path === '/' ? 'page' : undefined}>Home</a>
       {links.map((l) => <a href={l.href} aria-current={cur(l.href)}>{l.label}</a>)}
       <a class="btn" href="/quote" aria-current={quoteCur}>Request a quote</a>
+      <a class="nav__call" href={`tel:${site.phoneTel}`}>Call {site.phone}</a>
     </div>
   </details>
 </header>

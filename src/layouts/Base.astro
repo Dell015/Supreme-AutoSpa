@@ -3,7 +3,6 @@ import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import MobileBar from '../components/MobileBar.astro';
 import { site, groups } from '../data/site';
 
 interface Props { title: string; description: string; image?: string; noindex?: boolean; }
@@ -83,7 +82,7 @@ const ld = {
     <div class="progress" aria-hidden="true"></div>
     <main id="main"><slot /></main>
     <Footer />
-    <MobileBar />
+    <button class="totop" type="button" aria-label="Back to top"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M12 20V5M5 11l7-7 7 7"/></svg></button>
     <script>import '../scripts/main.js';</script>
   </body>
 </html>
