@@ -136,27 +136,24 @@ const faqLd = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity
     <div class="wrap slipwrap">
       <div class="slipwrap__text">
         <h2 class="title" id="quote-h" data-reveal>How a quote works</h2>
-        <p class="lead" data-reveal style="--i:1">No guessing and no surprises. You tell us the car and the job, we tell you the price, and we agree before any work starts.</p>
-        <a class="btn" href="/quote" data-reveal style="--i:2">Request a quote <Arrow /></a>
+        <p class="lead" data-reveal style="--i:1">No guessing and no surprises. You tell us the car and the job, you get an approximate price, and the final price is agreed before any work starts.</p>
+        <p class="quote__note" data-reveal style="--i:2">The first price is a rough estimate. We confirm it after we see your vehicle in person.</p>
+        <a class="btn" href="/quote" data-reveal style="--i:3">Request a quote <Arrow /></a>
       </div>
-      <div class="slip">
-        <h3>Before you come</h3>
-        <dl>
-          <div class="row" style="--i:0"><dt>Send your car and the job</dt><span class="dots" aria-hidden="true"></span><dd>You</dd></div>
-          <div class="row" style="--i:1"><dt>We ask for photos if needed</dt><span class="dots" aria-hidden="true"></span><dd>Us</dd></div>
-          <div class="row" style="--i:2"><dt>We reply with a price</dt><span class="dots" aria-hidden="true"></span><dd>Us</dd></div>
-        </dl>
-        <h3>At the shop</h3>
-        <dl>
-          <div class="row" style="--i:3"><dt>Bring the car in</dt><span class="dots" aria-hidden="true"></span><dd>You</dd></div>
-          <div class="row" style="--i:4"><dt>We check it and confirm the job</dt><span class="dots" aria-hidden="true"></span><dd>Us</dd></div>
-          <div class="row" style="--i:5"><dt>We do the work</dt><span class="dots" aria-hidden="true"></span><dd>Us</dd></div>
-        </dl>
-        <h3>Handover</h3>
-        <dl>
-          <div class="row" style="--i:6"><dt>Look it over together</dt><span class="dots" aria-hidden="true"></span><dd>Both</dd></div>
-          <div class="row" style="--i:7"><dt>Drive away happy</dt><span class="dots" aria-hidden="true"></span><dd>You</dd></div>
-        </dl>
+      <div class="slip" aria-label="The five steps of a quote">
+        <div class="slip__head">
+          <span class="slip__brand">Supreme AutoSpa</span>
+          <span class="slip__no num">QUOTE SLIP</span>
+        </div>
+        <div class="slip__bar" aria-hidden="true"></div>
+        <ol class="steps">
+          <li class="step" style="--i:0"><span class="step__n num">1</span><div><h3>You send your details</h3><p>Vehicle, the services you want, and photos if you have them. About two minutes.</p></div><span class="who who--you">You</span></li>
+          <li class="step" style="--i:1"><span class="step__n num">2</span><div><h3>You get an approximate price</h3><p>A rough estimate based on what you sent, so you know the range right away.</p></div><span class="who">System</span></li>
+          <li class="step" style="--i:2"><span class="step__n num">3</span><div><h3>The owner checks it</h3><p>He reviews your request and verifies the estimate as soon as he is able.</p></div><span class="who">Owner</span></li>
+          <li class="step" style="--i:3"><span class="step__n num">4</span><div><h3>Bring it to the shop</h3><p>We inspect the vehicle thoroughly in person, then confirm the final price with you.</p></div><span class="who who--you">Both</span></li>
+          <li class="step" style="--i:4"><span class="step__n num">5</span><div><h3>We do the work</h3><p>Look it over together at handover, then drive away happy.</p></div><span class="who">Us</span></li>
+        </ol>
+        <div class="slip__stamp" aria-hidden="true">Estimate only<br /><small>Final price after inspection</small></div>
         <div class="final"><span>Open {site.hours.days}</span><span class="num">{site.hours.label}</span></div>
       </div>
     </div>

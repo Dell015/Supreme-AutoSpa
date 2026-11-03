@@ -640,3 +640,27 @@ html, body { overflow-x: clip; }
 @media (max-width: 820px) { .sv__item h3 { font-size: clamp(1.5rem, 6.4vw, 2rem); } .footer__legal a[href='#top'] { display: none; } .footer__places a { font-size: clamp(1rem, 4.6vw, 1.5rem); } .nav__sheet .nav__call + .nav__call { margin-top: 0; } }
 .band:not(.band--dark) .place__facts dd, .place__facts dd { color: var(--stone-muted); }
 .footer .place__facts dd { color: var(--muted); }
+
+/* Quote slip v2 */
+.quote__note { padding: 14px 16px; border-left: 3px solid var(--accent); background: rgb(236 231 225 / 0.06); font-size: var(--step-small); font-weight: 500; }
+.slip { padding: 28px 28px 64px; max-width: 520px; position: relative; }
+.slip__head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.slip__brand { font-family: var(--display); text-transform: uppercase; font-size: 1.125rem; letter-spacing: -0.01em; }
+.slip__no { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; color: var(--stone-muted); }
+.slip__bar { height: 26px; margin: 14px 0 6px; opacity: 0.85; background: repeating-linear-gradient(90deg, var(--stone-ink) 0 2px, transparent 2px 5px, var(--stone-ink) 5px 6px, transparent 6px 10px, var(--stone-ink) 10px 13px, transparent 13px 15px); }
+.steps { list-style: none; padding: 0; margin: 22px 0 0; display: grid; position: relative; }
+.step { display: grid; grid-template-columns: 40px 1fr auto; column-gap: 14px; align-items: start; padding-bottom: 24px; position: relative; }
+.step:last-child { padding-bottom: 0; }
+.step::before { content: ''; position: absolute; left: 19px; top: 40px; bottom: 0; width: 0; border-left: 2px dotted rgb(22 18 15 / 0.35); }
+.step:last-child::before { display: none; }
+.step__n { width: 40px; height: 40px; display: grid; place-items: center; background: var(--stone-ink); color: var(--stone); font-weight: 800; font-size: 1.0625rem; transition: background-color 300ms var(--ease-out), color 300ms var(--ease-out), scale 300ms var(--ease-out); }
+.step h3 { font-size: 1.0625rem; font-weight: 800; margin: 2px 0 4px; line-height: 1.25; }
+.step p { font-size: 0.9375rem; color: var(--stone-muted); line-height: 1.45; }
+.who { font-size: 0.6875rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 8px; border: 1.5px solid currentColor; color: var(--stone-muted); white-space: nowrap; margin-top: 4px; }
+.who--you { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
+.slip__stamp { position: relative; width: fit-content; margin: 30px auto 0; rotate: -4deg; border: 3px solid rgb(180 50 40 / 0.55); color: rgb(180 50 40 / 0.6); padding: 6px 12px; font-family: var(--display); text-transform: uppercase; font-size: 1rem; line-height: 1.1; text-align: center; pointer-events: none; mix-blend-mode: multiply; }
+.slip__stamp small { display: block; font-family: var(--font); font-size: 0.5625rem; font-weight: 800; letter-spacing: 0.08em; }
+.slip .final { margin-top: 28px; }
+@media (hover: hover) and (pointer: fine) { .step:hover .step__n { background: var(--accent); color: var(--accent-ink); scale: 1.08; } }
+@media (max-width: 520px) { .step { grid-template-columns: 36px 1fr; } .step .who { grid-column: 2; justify-self: start; margin-top: 8px; } .step__n { width: 36px; height: 36px; } .step::before { left: 17px; top: 36px; } }
+@media (prefers-reduced-motion: no-preference) { .js .slip .step { opacity: 0; transform: translateX(-10px); transition: opacity 500ms var(--ease-out), transform 600ms var(--ease-out); transition-delay: calc(var(--i, 0) * 110ms); } .js .slip.is-in .step { opacity: 1; transform: none; } .js .slip .slip__stamp { opacity: 0; scale: 1.6; transition: opacity 400ms 700ms, scale 500ms 700ms var(--ease-expo); } .js .slip.is-in .slip__stamp { opacity: 1; scale: 1; } }
