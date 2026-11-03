@@ -2,7 +2,7 @@
 
 export const site = {
   name: 'Supreme AutoSpa',
-  url: 'https://supreme-autospa.com',
+  url: 'https://supreme-auto-spa-kappa.vercel.app',
   tagline:
     'Premium car care in style, where top-notch detailing meets an aesthetic, relaxing ambiance.',
   phone: '0997 931 3517',
