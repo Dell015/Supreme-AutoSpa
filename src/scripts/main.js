@@ -1,3 +1,4 @@
+import { leads as leadStore } from '../lib/store.js';
 // Small, dependency-free behaviour. Everything degrades: without JS the page is fully visible and readable.
 
 const REDUCED = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -276,6 +277,14 @@ function initQuote() {
     out.hidden = false;
     out.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
     out.querySelector('h2').focus({ preventScroll: true });
+    // Save the request to the owner's inbox (demo storage until the database is connected).
+    const det = {};
+    if (services.includes('repaint')) det.Repainting = [v('repaint_scope'), v('repaint_color'), v('repaint_areas')].filter(Boolean).join(', ');
+    if (services.includes('ceramic') || services.includes('graphene')) det.Coating = v('has_coating');
+    if (services.includes('pms')) det.Maintenance = [v('odometer') && v('odometer') + ' km', v('last_pms') && 'last PMS ' + v('last_pms'), v('concerns')].filter(Boolean).join(', ');
+    const sched = [v('date'), v('slot'), v('urgency')].filter(Boolean).join(', ');
+    if (sched) det.Schedule = sched;
+    leadStore.add({ name: v('name'), phone: v('phone'), email: v('email'), contact: v('contact'), vtype: v('vtype'), vehicle: [v('year'), v('make'), v('model')].filter(Boolean).join(' '), color: v('color'), paint: v('paint'), interior: v('interior'), services: services.map(label), details: det, notes: v('notes'), photos: Boolean(d.get('photos')), message: msg }).catch(() => {});
     // Lead capture hook. Set data-endpoint on the form to store requests once a backend exists.
     if (form.dataset.endpoint) {
       fetch(form.dataset.endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: msg, services, fields: Object.fromEntries(d) }), keepalive: true }).catch(() => {});

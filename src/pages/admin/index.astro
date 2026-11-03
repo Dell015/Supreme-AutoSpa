@@ -1,0 +1,91 @@
+---
+import '../../styles/global.css';
+import '../../styles/admin.css';
+import { site, photos } from '../../data/site';
+import { live } from '../../lib/store.js';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#12100e" />
+    <title>Owner admin | Supreme AutoSpa</title>
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  </head>
+  <body class="adm" data-live={live ? '1' : '0'} data-sms={site.phoneTel} data-messenger={site.messenger}>
+    <header class="adm__top">
+      <a class="adm__brand" href="/admin"><img src="/img/logo-160.webp" alt="" width="52" height="46" /><span>Owner admin</span></a>
+      <span class="adm__mode" data-mode>{live ? 'Live' : 'Demo data'}</span>
+      <a class="adm__site" href="/" target="_blank" rel="noopener">View site</a>
+      <button type="button" class="adm__out" data-signout hidden>Sign out</button>
+    </header>
+
+    <main class="adm__main">
+      <section class="login" data-login hidden>
+        <h1 class="display">Sign in</h1>
+        {live ? (
+          <form class="login__form" data-loginform>
+            <label>Email<input name="email" type="email" autocomplete="username" required /></label>
+            <label>Password<input name="password" type="password" autocomplete="current-password" required /></label>
+            <p class="err" data-loginerr hidden></p>
+            <button class="btn" type="submit">Sign in</button>
+          </form>
+        ) : (
+          <div class="login__form">
+            <p class="muted">This is a demo with sample requests, stored only in this browser. Real sign-in switches on when the database is connected.</p>
+            <button class="btn" type="button" data-demo>Open the demo</button>
+          </div>
+        )}
+      </section>
+
+      <div class="app" data-app hidden>
+        <nav class="tabs" aria-label="Admin sections">
+          <button type="button" data-tab="inbox" aria-pressed="true">Requests <em data-badge></em></button>
+          <button type="button" data-tab="insights" aria-pressed="false">Insights</button>
+          <button type="button" data-tab="tools" aria-pressed="false">Tools</button>
+        </nav>
+
+        <section data-view="inbox">
+          <div class="attn" data-attn></div>
+          <div class="adm__bar">
+            <div class="seg" role="group" aria-label="Filter by status" data-filters></div>
+            <input class="search" type="search" placeholder="Search name, vehicle, service" aria-label="Search requests" data-search />
+          </div>
+          <ul class="leadlist" data-list></ul>
+          <p class="empty" data-empty hidden>Nothing here. New requests appear as soon as customers send them.</p>
+        </section>
+
+        <section data-view="insights" hidden>
+          <div class="kpis" data-kpis></div>
+          <div class="charts">
+            <div class="card"><h2>Requests by status</h2><div class="bars" data-bars-status></div></div>
+            <div class="card"><h2>Most asked services</h2><div class="bars" data-bars-services></div></div>
+            <div class="card"><h2>Vehicle types</h2><div class="bars" data-bars-vehicles></div></div>
+          </div>
+        </section>
+
+        <section data-view="tools" hidden>
+          <div class="card tools">
+            <h2>Tools</h2>
+            <p>Download every request as a spreadsheet file, or reset the demo.</p>
+            <div class="row"><button class="btn" type="button" data-csv>Download requests (CSV)</button>{!live && <button class="btn btn--ghost" type="button" data-reset>Reset demo data</button>}</div>
+            <h3>Public contact details</h3>
+            <p class="mono">{site.phone} · {site.email}</p>
+            <p class="muted">To change opening hours, services or photos, message your web developer. Those updates are included in the monthly care.</p>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <aside class="sheet" data-sheet hidden aria-label="Request details">
+      <div class="sheet__scrim" data-close></div>
+      <div class="sheet__panel" data-panel></div>
+    </aside>
+    <div class="toast" data-toast role="status" aria-live="polite"></div>
+    <script>import '../../scripts/admin.js';</script>
+  </body>
+</html>
