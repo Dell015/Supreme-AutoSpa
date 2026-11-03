@@ -154,6 +154,7 @@ function initGallery() {
   if (!root) return;
   const figs = [...root.querySelectorAll('figure')];
   const buttons = document.querySelectorAll('[data-filter]');
+  const counter = document.querySelector('[data-count]');
   buttons.forEach((btn) => btn.addEventListener('click', () => {
     const f = btn.dataset.filter;
     buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
@@ -163,21 +164,48 @@ function initGallery() {
       fig.classList.remove('pop');
       if (!fig.hidden) { void fig.offsetWidth; fig.style.setProperty('--i', String(Math.min(n++, 12))); fig.classList.add('pop'); }
     });
+    if (counter) counter.textContent = String(n);
+    const top = root.getBoundingClientRect().top + scrollY - 140;
+    if (scrollY > top) scrollTo({ top, behavior: REDUCED() ? 'auto' : 'smooth' });
   }));
+
+  // Pointer tilt + light on tiles (mouse only).
+  if (matchMedia('(hover: hover) and (pointer: fine)').matches && !REDUCED()) {
+    root.querySelectorAll('figure button').forEach((b) => {
+      b.addEventListener('pointermove', (e) => {
+        const r = b.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+        b.style.setProperty('--tx', ((x - 0.5) * 6).toFixed(2) + 'deg');
+        b.style.setProperty('--ty', ((0.5 - y) * 6).toFixed(2) + 'deg');
+        b.style.setProperty('--mx', (x * 100).toFixed(1) + '%');
+        b.style.setProperty('--my', (y * 100).toFixed(1) + '%');
+      });
+      b.addEventListener('pointerleave', () => { b.style.setProperty('--tx', '0deg'); b.style.setProperty('--ty', '0deg'); });
+    });
+  }
 
   const dlg = document.querySelector('dialog.lb');
   if (!dlg) return;
-  const img = dlg.querySelector('img');
+  const img = dlg.querySelector('.lb__stage img');
   const cap = dlg.querySelector('[data-cap]');
+  const tag = dlg.querySelector('[data-tag]');
+  const cnt = dlg.querySelector('[data-count-lb]');
+  const thumbs = dlg.querySelector('[data-thumbs]');
   let list = [], idx = 0;
+  const pad = (n) => String(n).padStart(2, '0');
   const show = (i) => {
     idx = (i + list.length) % list.length;
     const b = list[idx];
     img.classList.remove('swap'); void img.offsetWidth; img.classList.add('swap');
-    img.src = b.dataset.full; img.alt = b.dataset.alt; cap.textContent = b.dataset.caption;
+    img.src = b.dataset.full; img.alt = b.dataset.alt; cap.textContent = b.dataset.caption; tag.textContent = b.dataset.tag;
+    cnt.textContent = pad(idx + 1) + ' / ' + pad(list.length);
+    thumbs.querySelectorAll('button').forEach((t, n) => { t.setAttribute('aria-current', String(n === idx)); if (n === idx) t.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' }); });
+    const nx = list[(idx + 1) % list.length]; if (nx) new Image().src = nx.dataset.full;
   };
   root.querySelectorAll('figure button').forEach((b) => b.addEventListener('click', () => {
-    list = [...root.querySelectorAll('figure:not([hidden]) button')];
+    list = [...root.querySelectorAll('figure:not([hidden]) button[data-full]')];
+    thumbs.innerHTML = '';
+    list.forEach((it, n) => { const t = document.createElement('button'); t.type = 'button'; t.setAttribute('aria-label', 'Photo ' + (n + 1)); t.innerHTML = '<img src="' + it.dataset.thumb + '" alt="" loading="lazy">'; t.addEventListener('click', () => show(n)); thumbs.appendChild(t); });
     show(list.indexOf(b));
     dlg.showModal();
   }));
@@ -189,6 +217,9 @@ function initGallery() {
     if (e.key === 'ArrowLeft') show(idx - 1);
     if (e.key === 'ArrowRight') show(idx + 1);
   });
+  let sx = 0;
+  img.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; }, { passive: true });
+  img.addEventListener('touchend', (e) => { const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 50) show(idx + (dx < 0 ? 1 : -1)); }, { passive: true });
 }
 
 function initQuote() {
@@ -271,8 +302,17 @@ function initTop() {
   document.addEventListener('astro:before-swap', () => removeEventListener('scroll', on), { once: true });
 }
 
+function initBA() {
+  document.querySelectorAll('.ba').forEach((el) => {
+    const r = el.querySelector('.ba__range');
+    const set = () => el.style.setProperty('--pos', r.value + '%');
+    r.addEventListener('input', set); set();
+  });
+}
+
 function init() {
   closeMenu();
+  initBA();
   initTop();
   initReveals();
   initStatus();

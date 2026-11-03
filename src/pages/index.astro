@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Img from '../components/Img.astro';
 import Arrow from '../components/Arrow.astro';
 import Icon from '../components/Icon.astro';
+import BeforeAfter from '../components/BeforeAfter.astro';
 import Shapes from '../components/Shapes.astro';
 import { site, groups, reviews, photos, allServices } from '../data/site';
 
@@ -88,12 +89,26 @@ const faqLd = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity
           <figure><div class="ph ar-tall" data-wipe><Img name="fortuner-trd-front" sizes="(max-width: 900px) 50vw, 28vw" fit="50% 50%" /></div><figcaption>{photos['fortuner-trd-front'].caption}</figcaption></figure>
           <figure><div class="ph ar-tall" data-wipe style="--i:1"><Img name="engine-wash-hood" sizes="(max-width: 900px) 50vw, 28vw" fit="50% 50%" /></div><figcaption>{photos['engine-wash-hood'].caption}</figcaption></figure>
         </div>
-        <figure><div class="ph ar-wide" data-wipe><Img name="jeep-wrangler" sizes="(max-width: 900px) 100vw, 58vw" /></div><figcaption>{photos['jeep-wrangler'].caption}</figcaption></figure>
+        <figure><div class="ph ar-wide" data-wipe><Img name="mustang-hex" sizes="(max-width: 900px) 100vw, 58vw" fit="50% 60%" /></div><figcaption>{photos['mustang-hex'].caption}</figcaption></figure>
         <div class="work__row work__row--two">
           <figure><div class="ph ar-tall" data-wipe><Img name="classic-4x4-wash" sizes="(max-width: 900px) 50vw, 28vw" fit="30% 50%" /></div><figcaption>{photos['classic-4x4-wash'].caption}</figcaption></figure>
           <figure><div class="ph ar-tall" data-wipe style="--i:1"><Img name="hilux-undercarriage-ramp" sizes="(max-width: 900px) 50vw, 28vw" /></div><figcaption>{photos['hilux-undercarriage-ramp'].caption}</figcaption></figure>
         </div>
+        <figure><div class="ph ar-wide" data-wipe><Img name="trucks-hex-bay" sizes="(max-width: 900px) 100vw, 58vw" /></div><figcaption>{photos['trucks-hex-bay'].caption}</figcaption></figure>
       </div>
+    </div>
+  </section>
+
+  <!-- Before and after -->
+  <section class="band band--surface has-shapes" aria-labelledby="ba-h">
+    <Shapes v="a" />
+    <div class="wrap baband">
+      <div class="baband__text">
+        <h2 class="title" id="ba-h" data-reveal>See the difference.</h2>
+        <p class="lead" data-reveal style="--i:1">An engine bay before and after a wash, from a real job at the shop. Drag the handle.</p>
+        <a class="btn btn--ghost" href="/services#car-wash" data-reveal style="--i:2">See the car wash services <Arrow /></a>
+      </div>
+      <div data-reveal style="--i:1"><BeforeAfter before="engine-before" after="engine-after" label="Drag to compare the engine bay before and after washing" /></div>
     </div>
   </section>
 

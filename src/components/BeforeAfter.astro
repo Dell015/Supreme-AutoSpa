@@ -1,0 +1,12 @@
+---
+import Img from './Img.astro';
+interface Props { before: string; after: string; label: string; }
+const { before, after, label } = Astro.props;
+---
+<div class="ba" style="--pos:50%">
+  <div class="ba__img"><Img name={after} sizes="(max-width: 900px) 100vw, 60vw" /></div>
+  <div class="ba__img ba__img--top"><Img name={before} sizes="(max-width: 900px) 100vw, 60vw" /></div>
+  <span class="ba__tag ba__tag--l">Before</span><span class="ba__tag ba__tag--r">After</span>
+  <span class="ba__line" aria-hidden="true"><i><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></i></span>
+  <input class="ba__range" type="range" min="0" max="100" value="50" aria-label={label} />
+</div>

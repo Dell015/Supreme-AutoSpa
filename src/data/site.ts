@@ -129,6 +129,16 @@ export const photos: Record<string, Photo> = {
 
 photos['shop-exterior'] = { file: 'shop-exterior', w: 1800, h: 1350, alt: 'The Supreme AutoSpa building: copper roofs over open bays, dark cladding, bamboo and volcanic stone', caption: 'The shop', tags: ['shop'] };
 
+// Photos added 3 Nov (supplied by the shop).
+photos['dash-wash'] = { file: 'dash-wash', w: 1800, h: 1350, alt: 'A worker washing a removed dashboard in the bay while the car sits with its doors open', caption: 'Dashboard out and washed by hand', tags: ['detail', 'bay'] };
+photos['interior-stripdown'] = { file: 'interior-stripdown', w: 1800, h: 1350, alt: 'Inside of an SUV stripped of its seats and carpet for a deep interior clean', caption: 'Full interior strip-down', tags: ['detail', 'suv'] };
+photos['seats-out'] = { file: 'seats-out', w: 1800, h: 1350, alt: 'Two workers cleaning seats that were taken out of an SUV, parked under the copper roof', caption: 'Seats out, cleaned one by one', tags: ['detail', 'suv', 'bay'] };
+photos['engine-before'] = { file: 'engine-before', w: 1800, h: 1350, alt: 'Engine bay of a Toyota before washing, with dust and grime on the engine and hoses', caption: 'Engine bay before', tags: ['detail'] };
+photos['engine-after'] = { file: 'engine-after', w: 1800, h: 1350, alt: 'The same engine bay after washing, clean and dark with the parts clearly visible', caption: 'Engine bay after', tags: ['detail'] };
+photos['mustang-door'] = { file: 'mustang-door', w: 1350, h: 1800, alt: 'Red sports coupe with white stripes parked under the hex lights, driver door open', caption: 'Red coupe under the hex lights', tags: ['car', 'bay'] };
+photos['mustang-hex'] = { file: 'mustang-hex', w: 1800, h: 1350, alt: 'Side view of a red sports coupe in the bay with the hex ceiling lights above', caption: 'Red coupe, side view', tags: ['car', 'bay'] };
+photos['trucks-hex-bay'] = { file: 'trucks-hex-bay', w: 1800, h: 1350, alt: 'Two lifted trucks with bull bars parked side by side under the hex lights', caption: 'Lifted trucks in the bay', tags: ['pickup', 'suv', 'bay'] };
+
 // SAMPLE PHOTOS: placeholders until the shop has its own. They are labelled on the page.
 photos['sample-interior'] = { file: 'sample-interior', w: 1400, h: 1750, alt: 'Sample photo: interior of a blue sedan with black leather seats after detailing', caption: 'Interior detailing', tags: [], sample: true };
 photos['sample-engine-bay'] = { file: 'sample-engine-bay', w: 627, h: 1114, alt: 'Sample photo: a clean engine bay under an open hood', caption: 'Engine wash', tags: [], sample: true };
@@ -137,6 +147,14 @@ photos['sample-polishing'] = { file: 'sample-polishing', w: 687, h: 1031, alt: '
 photos['wheel-loader'] = { file: 'wheel-loader', w: 488, h: 732, alt: 'Yellow SDLG wheel loader with two men on it, being washed outdoors under a blue sky', caption: 'SDLG wheel loader', tags: ['other'] };
 
 export const galleryOrder = [
+  'mustang-hex',
+  'trucks-hex-bay',
+  'interior-stripdown',
+  'engine-after',
+  'mustang-door',
+  'seats-out',
+  'dash-wash',
+  'engine-before',
   'sign-vintage-4x4',
   'bmw-4-series',
   'fortuner-trd-side',
